@@ -1,0 +1,64 @@
+/* The Minibar (cluster 8): a little fridge. Mint accent from the floor (--accent). */
+.floor[data-floor="minibar"] { grid-template-columns: minmax(0, 1fr); }
+.mb { width: min(760px, 100%); max-width: 100%; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(6px, 1.3vh, 12px); }
+.mb .floor-name { font-size: clamp(1.8rem, 5.5vw, 3.4rem); }
+
+.mb-fridge {
+  position: relative; width: 100%; margin-top: clamp(4px, 1.5vh, 12px); perspective: 1200px;
+  background: #E8EEF0; border: 4px solid #B9C4C9; border-radius: 18px; padding: 10px; box-shadow: 0 8px 0 rgba(0, 0, 0, .3);
+}
+.mb-inside {
+  position: relative; background: linear-gradient(180deg, #1B2A33, #12202A); border-radius: 10px; padding: 8px 12px 10px;
+  max-height: 40vh; max-height: 40dvh; overflow-y: auto; text-align: left; scrollbar-width: thin; scrollbar-color: var(--accent) transparent;
+  box-shadow: inset 0 0 26px rgba(0, 0, 0, .6);
+}
+.mb-fridge.is-open .mb-inside { box-shadow: inset 0 0 40px color-mix(in srgb, var(--accent) 30%, transparent); background: linear-gradient(180deg, #23404A, #17303A); }
+.mb-shelf { padding: 6px 0 8px; border-bottom: 5px solid #B9C4C9; }
+.mb-shelf:last-child { border-bottom: 0; }
+.mb-shelf-h { margin: 0 0 4px; color: var(--cream-d); font: 500 .72rem var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
+.mb-mood { margin-left: 10px; color: var(--accent); font: 500 1.05rem var(--font-hand); letter-spacing: 0; text-transform: none; }
+.mb-row { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.mb-slot { width: 84px; }
+
+.mb-bottle { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 100%; padding: 2px 0 4px; background: none; border: 0; color: var(--cream); cursor: pointer; }
+.mb-bottle:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 6px; }
+.mb-glass { position: relative; display: block; width: 36px; height: 60px; transition: transform .25s cubic-bezier(.3, 1.5, .5, 1); }
+.mb-glass svg { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 3px 0 rgba(0, 0, 0, .35)); }
+.mb-bottle:hover .mb-glass { transform: translateY(-3px) rotate(-3deg); }
+.mb-bottle .cap { fill: #F4E9D3; transition: transform .3s, opacity .3s; transform-box: fill-box; transform-origin: center; }
+.mb-bottle.is-open .cap { transform: translate(14px, -16px) rotate(40deg); opacity: 0; }
+.mb-bottle.is-pop .mb-glass { animation: mb-pop .5s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes mb-pop { 30% { transform: translateY(-10px) scale(1.12) rotate(-6deg); } }
+.mb-name { font: 400 .72rem/1.25 var(--font-mono); color: var(--cream-d); text-align: center; overflow-wrap: anywhere; }
+.mb-bottle.is-open .mb-name { color: var(--ink); background: var(--accent); padding: 0 5px; border-radius: 4px; font-weight: 500; }
+.mb-fizz { position: absolute; left: 50%; top: -4px; width: 20px; margin-left: -10px; height: 30px; pointer-events: none; opacity: 0; }
+.mb-fizz i { position: absolute; bottom: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--k); }
+.mb-fizz i:nth-child(1) { left: 2px; } .mb-fizz i:nth-child(2) { left: 8px; } .mb-fizz i:nth-child(3) { left: 14px; }
+.mb-bottle.is-open .mb-fizz { opacity: 1; }
+.mb-bottle.is-open .mb-fizz i { animation: mb-rise 1.6s ease-out infinite; }
+.mb-bottle.is-open .mb-fizz i:nth-child(2) { animation-delay: .5s; } .mb-bottle.is-open .mb-fizz i:nth-child(3) { animation-delay: 1s; }
+@keyframes mb-rise { from { transform: translateY(0) scale(1); opacity: 1; } to { transform: translateY(-26px) scale(.4); opacity: 0; } }
+.mb-empty { margin: 20px; color: var(--cream-d); }
+
+/* the door: swings open on its left hinge */
+.mb-door {
+  position: absolute; inset: 10px; z-index: 3; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #F3F7F8, #D5DEE2); border-radius: 10px; border: 2px solid #B9C4C9;
+  transform-origin: left center; transition: transform .8s cubic-bezier(.5, 0, .2, 1); backface-visibility: hidden; pointer-events: none;
+}
+.mb-fridge.is-open .mb-door { transform: rotateY(-112deg); }
+.mb-handle { position: absolute; right: 14px; top: 28%; bottom: 28%; width: 10px; border-radius: 5px; background: #8E9BA1; }
+.mb-door-t { color: #5C6970; font: 500 .85rem var(--font-mono); letter-spacing: .3em; }
+.mb-light { position: absolute; top: 6px; left: 50%; width: 46px; height: 5px; margin-left: -23px; border-radius: 3px; background: #8E9BA1; z-index: 4; transition: background .4s, box-shadow .4s; }
+.mb-fridge.is-open .mb-light { background: #FFF6C9; box-shadow: 0 0 14px 4px #FFF1A8; }
+
+.mb-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 16px; min-height: 44px; }
+.mb-toggle { min-height: 44px; padding: 0 18px; background: var(--ink-3); color: var(--cream); border: 2px solid var(--accent); border-radius: 999px; font: 500 .88rem var(--font-mono); cursor: pointer; }
+.mb-toggle:hover { background: var(--accent); color: var(--ink); }
+.mb-toggle:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.mb-tab { margin: 0; color: var(--cream-d); font: 400 .85rem var(--font-mono); }
+.is-empty .mb-tab { color: var(--amber); }
+
+@media (max-height: 700px) { .mb .tagline { display: none; } .mb-inside { max-height: 38dvh; } }
+@media (max-width: 520px) { .mb-slot { width: 82px; } .mb-row { gap: 4px 0; } .mb-name { font-size: .66rem; overflow-wrap: break-word; } }
+@media (prefers-reduced-motion: reduce) { .mb-door, .mb-glass, .mb-bottle .cap { transition: none !important; } .mb-bottle.is-open .mb-fizz i, .mb-bottle.is-pop .mb-glass { animation: none !important; } }

@@ -1,0 +1,181 @@
+/* Staff entrance + CV page (cluster 4).
+   Same hotel, same fonts and colors, but calm: cream paper, navy text, big clear buttons,
+   plain headings. Built so a busy reader finds everything in seconds. */
+
+.staff-page {
+  --paper: #FAF4E6;   /* page */
+  --card:  #FFFDF7;   /* cards */
+  --line:  #E0D2B0;   /* hairlines */
+  --ink:   #12162B;   /* text */
+  --muted: #464C69;   /* secondary text (7:1 on the paper) */
+  --accent: #B3263E;  /* small labels and links (5.5:1 on the paper) */
+  --amber: #F2B84B;
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--font-serif); font-size: 1.06rem; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.staff-page *, .staff-page *::before, .staff-page *::after { box-sizing: border-box; }
+.staff-page :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.wrap { max-width: 940px; margin: 0 auto; padding: 0 20px; }
+.loading { padding: 40px 0; color: var(--muted); }
+#main:focus { outline: none; }
+
+.skip {
+  position: absolute; left: 12px; top: -60px; z-index: 10;
+  padding: 10px 16px; background: var(--ink); color: #F4E9D3; border-radius: 0 0 8px 8px;
+  font: 500 .9rem var(--font-mono);
+}
+.skip:focus { top: 0; }
+
+/* ---------- top bar (a nod to the hotel sign) ---------- */
+.site-bar { background: var(--ink); color: #F4E9D3; border-bottom: 4px solid var(--amber); }
+.bar-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; min-height: 56px; }
+.brand {
+  color: var(--amber); text-decoration: none; font-weight: 700;
+  font-size: .95rem; letter-spacing: .14em; text-transform: uppercase;
+}
+.brand span { margin-left: 10px; color: #D9C7A5; font: 400 .78rem var(--font-mono); letter-spacing: .08em; text-transform: none; }
+.door-link {
+  display: inline-flex; align-items: center; min-height: 44px;
+  color: #F4E9D3; font: 400 .85rem var(--font-mono); text-underline-offset: 4px;
+}
+.door-link:hover, .brand:hover { color: #fff; }
+.site-bar :focus-visible { outline-color: #F4E9D3; }
+
+/* ---------- hero: the staff badge and the main actions ---------- */
+.hero { display: flex; flex-wrap: wrap; align-items: center; gap: 28px 36px; padding: 40px 0 6px; }
+.badge {
+  position: relative; flex: none; width: 230px; padding: 30px 20px 20px; text-align: center;
+  background: var(--ink); color: #F4E9D3; border-top: 10px solid var(--amber); border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(18, 22, 43, .25);
+}
+.badge-slot { position: absolute; top: -8px; left: 50%; width: 54px; height: 6px; margin-left: -27px; border-radius: 4px; background: var(--paper); }
+.badge-role { margin: 0 0 12px; color: var(--amber); font: 500 .75rem var(--font-mono); letter-spacing: .3em; }
+.badge-photo {
+  width: 104px; height: 104px; margin: 0 auto 12px; overflow: hidden; border-radius: 50%;
+  border: 3px solid var(--amber); background: #2B3160;
+}
+.badge-photo img, .badge-photo svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+.badge-name { margin: 0; font-weight: 700; font-size: 1.25rem; line-height: 1.15; }
+.badge-note { margin: 8px 0 0; color: #D9C7A5; font: 400 .78rem var(--font-mono); }
+
+.hero-text { flex: 1 1 320px; min-width: 0; }
+.kicker { margin: 0 0 6px; color: var(--accent); font: 500 .78rem var(--font-mono); letter-spacing: .22em; text-transform: uppercase; }
+.hero h1 { margin: 0 0 10px; font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.08; }
+.headline { margin: 0 0 6px; font-size: 1.2rem; }
+.meta { margin: 0 0 20px; color: var(--muted); font: 400 .9rem var(--font-mono); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px;
+  background: transparent; color: var(--ink); border: 2px solid var(--ink); border-radius: 999px;
+  font: 500 .92rem var(--font-mono); text-decoration: none; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn-primary { background: var(--amber); border-color: var(--amber); }
+.btn-primary:hover { background: #E5A52F; border-color: #E5A52F; color: var(--ink); }
+.btn-todo { border-style: dashed; border-color: #9AA0B8; color: var(--muted); cursor: help; }
+.btn-todo:hover { background: transparent; color: var(--muted); }
+
+/* ---------- jump links ---------- */
+.toc {
+  display: flex; flex-wrap: wrap; gap: 0 20px; margin: 28px 0 0; padding: 6px 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  font: 500 .85rem var(--font-mono);
+}
+.toc a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-underline-offset: 4px; }
+.toc a:hover { color: var(--accent); }
+
+/* ---------- sections ---------- */
+.block { margin: 44px 0; scroll-margin-top: 12px; }
+.block h2 { margin: 0 0 18px; padding-left: 12px; border-left: 6px solid var(--amber); font-size: 1.65rem; line-height: 1.2; }
+.block > p { max-width: 68ch; margin: 0 0 12px; }
+.muted { color: var(--muted); }
+
+.cards, .certs, .posters { list-style: none; margin: 0; padding: 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.card, .cert {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px;
+}
+.card h3, .cert h3 { margin: 0 0 6px; font-size: 1.15rem; line-height: 1.25; }
+.card p, .cert p { margin: 0 0 10px; }
+.is-placeholder { border-style: dashed; border-color: #B8AC8C; }
+.ph {
+  display: inline-block; margin-top: 2px; padding: 2px 8px; border-radius: 4px;
+  background: var(--amber); color: var(--ink); font: 500 .68rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0 0 10px; padding: 0; }
+.chips li { padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; background: #F2E8CF; font: 400 .82rem var(--font-mono); }
+.links { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0 !important; font: 500 .9rem var(--font-mono); }
+.links a, .contact a, .cert a { color: var(--accent); text-underline-offset: 4px; }
+.links a { display: inline-flex; align-items: center; min-height: 32px; }
+
+.timeline { list-style: none; margin: 0; padding: 0 0 0 4px; border-left: 3px solid var(--amber); }
+.timeline-item { position: relative; margin: 0 0 18px; padding: 0 0 0 18px; }
+.timeline-item h3 { margin: 0; font-size: 1.15rem; }
+.timeline-item p { margin: 2px 0 0; }
+.timeline-item.is-placeholder { border: 0; }
+
+.certs { display: grid; gap: 10px; }
+.cert { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 14px 18px; }
+.cert > div { min-width: 0; }
+.cert p { margin: 0; }
+.more { margin: 14px 0 0; }
+.more a { color: var(--accent); text-underline-offset: 4px; }
+
+.posters { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
+.poster { margin: 0; }
+.poster a { display: block; }
+.poster img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.poster-ph {
+  display: grid; place-items: center; aspect-ratio: 3 / 4; padding: 12px; text-align: center;
+  border: 2px dashed #B8AC8C; border-radius: 8px; color: var(--muted); font: 400 .85rem var(--font-mono);
+}
+.poster figcaption { margin-top: 8px; font-size: .95rem; line-height: 1.35; }
+.poster figcaption b { display: block; }
+
+.skill-group { margin: 0 0 16px; }
+.skill-group h3 { margin: 0 0 8px; color: var(--muted); font: 500 .8rem var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+
+.contact { display: grid; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.contact li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.contact .label { min-width: 92px; color: var(--muted); font: 500 .8rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+
+.foot {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
+  margin: 56px 0 0; padding: 28px 0 56px; border-top: 1px solid var(--line);
+  color: var(--muted); font: 400 .88rem var(--font-mono);
+}
+.foot p { margin: 0; }
+
+/* ---------- the CV page ---------- */
+.cv-head { padding: 32px 0 8px; }
+.cv-head h1 { margin: 0 0 14px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.1; }
+.cv-frame { display: block; width: 100%; height: min(82vh, 1200px); border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.cv-img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.cv-empty {
+  padding: 40px 24px; text-align: center; border: 2px dashed #B8AC8C; border-radius: 12px; background: var(--card);
+}
+.cv-empty h2 { margin: 0 0 8px; padding: 0; border: 0; font-size: 1.4rem; }
+.cv-empty p { margin: 0 auto 8px; max-width: 52ch; color: var(--muted); }
+
+/* ---------- print: a clean page, no buttons ---------- */
+@media print {
+  .staff-page { background: #fff; font-size: 11pt; }
+  .site-bar, .toc, .actions, .skip, .foot .door-link, .btn-todo, .ph { display: none !important; }
+  .badge { box-shadow: none; }
+  .card, .cert, .timeline-item, .poster { break-inside: avoid; }
+  .block { margin: 22px 0; }
+  .links a::after, .contact a::after { content: none; }
+}
+
+@media (max-width: 520px) {
+  .hero { gap: 22px; padding-top: 28px; }
+  .badge { width: 100%; max-width: 320px; }
+  .actions .btn { flex: 1 1 140px; }
+}

@@ -1,0 +1,137 @@
+/* Entrance (cluster 2): the night street, the bell and the opening door */
+
+.entrance {
+  --ground: max(14%, 120px);
+  position: fixed; inset: 0; z-index: 90; overflow: hidden;
+  background: #0A0D1E;
+  font-family: var(--font-mono);
+  touch-action: none;
+  transition: opacity .6s ease;
+}
+.entrance.is-fading { opacity: 0; pointer-events: none; }
+
+/* ---------- sky ---------- */
+.entrance-sky {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(1.6px 1.6px at 8% 14%,  #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 19% 31%, #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.8px 1.8px at 27% 9%,  #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 36% 24%, #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.6px 1.6px at 48% 7%,  #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 61% 19%, #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.8px 1.8px at 72% 11%, #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 83% 28%, #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.6px 1.6px at 93% 16%, #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 14% 46%, #F4E9D3 50%, transparent 55%),
+    radial-gradient(1.2px 1.2px at 88% 44%, #F4E9D3 50%, transparent 55%),
+    linear-gradient(180deg, #0A0D1E 0%, #12162B 55%, #1B2040 100%);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+@keyframes twinkle { from { opacity: .82; } to { opacity: 1; } }
+
+.entrance-moon {
+  position: absolute; top: 9%; right: 12%;
+  width: clamp(38px, 7vw, 64px); aspect-ratio: 1; border-radius: 50%;
+  background: #F4E9D3;
+  box-shadow: 0 0 34px rgba(244, 233, 211, .35), inset -9px -4px 0 rgba(201, 185, 150, .55);
+}
+
+/* ---------- the world (building + street) is what the camera zooms ---------- */
+.entrance-world {
+  position: absolute; inset: 0;
+  transform-origin: 50% 70%;
+  transition: transform 1.5s cubic-bezier(.55, .05, .85, .45);
+}
+.entrance.is-zooming .entrance-world { transform: scale(var(--zoom, 12)); }
+
+.entrance-scene { position: absolute; left: 0; right: 0; top: 0; bottom: var(--ground); }
+.entrance-scene svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+.entrance-ground {
+  position: absolute; left: 0; right: 0; bottom: 0; height: var(--ground);
+  overflow: hidden;
+  background: linear-gradient(180deg, #141935, #0A0D1E);
+  border-top: 3px solid rgba(242, 184, 75, .35);
+}
+.entrance-ground::before { /* warm light on the pavement */
+  content: ""; position: absolute; left: 50%; top: 0;
+  width: min(560px, 90vw); height: 90%; transform: translateX(-50%);
+  background: radial-gradient(ellipse at top, rgba(242, 184, 75, .5), transparent 70%);
+  opacity: .3; transition: opacity 1s ease;
+}
+.entrance.is-opening .entrance-ground::before { opacity: 1; }
+
+/* ---------- the sign hums; it flickers when the bell rings ---------- */
+.e-sign-lit { animation: hum 2.4s ease-in-out infinite alternate; }
+@keyframes hum { from { opacity: .82; } to { opacity: 1; } }
+.entrance.is-ringing .e-sign-lit { animation: flicker .9s linear; }
+@keyframes flicker {
+  0%, 100% { opacity: 1; } 15% { opacity: .25; } 28% { opacity: 1; }
+  42% { opacity: .45; } 58% { opacity: 1; } 72% { opacity: .7; }
+}
+
+/* ---------- the bell ---------- */
+#e-bell-dome { transform-box: fill-box; transform-origin: 50% 100%; }
+.e-btn { transition: transform .1s; transform-box: fill-box; }
+.entrance.is-ringing #e-bell-dome { animation: wobble .9s ease-out; }
+.entrance.is-ringing .e-btn { transform: translateY(3px); }
+@keyframes wobble {
+  0% { transform: rotate(0); } 12% { transform: rotate(-9deg); } 28% { transform: rotate(7deg); }
+  44% { transform: rotate(-5deg); } 60% { transform: rotate(3deg); } 78% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0); }
+}
+.e-ding { opacity: 0; fill: none; stroke: #F4E9D3; stroke-width: 3; stroke-linecap: round; }
+.entrance.is-ringing .e-ding { animation: ding .9s ease-out; }
+@keyframes ding { 0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; } }
+
+/* ---------- the doors swing open (drawn as a flat fold toward the hinges) ---------- */
+.e-leaf {
+  transform-box: fill-box;
+  transition: transform .9s cubic-bezier(.5, 0, .2, 1);
+}
+#e-leaf-l { transform-origin: 0 50%; }
+#e-leaf-r { transform-origin: 100% 50%; }
+.entrance.is-opening .e-leaf { transform: scaleX(.12); }
+
+/* ---------- controls (real buttons, placed over the drawing by JS) ---------- */
+.entrance-ui { transition: opacity .25s ease; }
+.entrance.is-ringing .entrance-ui { opacity: 0; pointer-events: none; }
+
+.entrance-bell {
+  position: absolute; z-index: 3; padding: 0; border: 0; border-radius: 50%;
+  background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.entrance-bell::before { /* the "tap me" pulse */
+  content: ""; position: absolute; inset: -2px;
+  border: 2px solid #F2B84B; border-radius: 50%;
+  animation: ping 1.8s ease-out infinite;
+}
+.entrance-bell:hover { background: rgba(242, 184, 75, .14); }
+.entrance-bell:focus-visible { outline: 3px solid #F4E9D3; outline-offset: 4px; }
+@keyframes ping { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(1.45); opacity: 0; } }
+
+.entrance-hint {
+  position: absolute; z-index: 3; margin: 0; transform: translateX(-50%);
+  width: max-content; max-width: 86vw; text-align: center; pointer-events: none;
+  font-family: var(--font-hand); font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.05;
+  color: var(--amber);
+  text-shadow: 0 0 14px rgba(242, 184, 75, .5);
+}
+.entrance-hint small {
+  display: block; margin-top: 4px;
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .02em;
+  color: var(--cream-d); text-shadow: none;
+}
+
+.entrance-skip, .entrance-staff {
+  position: absolute; z-index: 3; bottom: 8px;
+  min-height: 44px; display: inline-flex; align-items: center;
+  padding: 0 10px; background: transparent; border: 0; cursor: pointer;
+  font: 400 .78rem/1 var(--font-mono);
+  color: var(--cream-d); text-decoration: underline; text-underline-offset: 3px;
+}
+.entrance-skip { left: 10px; }
+.entrance-staff { right: 10px; }
+.entrance-skip:hover, .entrance-staff:hover { color: var(--amber); }
+.entrance-skip:focus-visible, .entrance-staff:focus-visible { outline: 3px solid var(--cream); outline-offset: 2px; }

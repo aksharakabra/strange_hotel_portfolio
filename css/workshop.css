@@ -1,0 +1,125 @@
+/* The Workshop (cluster 5): machines on a bench. Rose accent comes from the floor (--accent). */
+.ws {
+  width: min(1120px, 100%); display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: clamp(6px, 1.4vh, 14px); min-height: 0;
+}
+.ws .floor-name { font-size: clamp(1.8rem, 5.5vw, 3.4rem); }
+.ws-bench {
+  width: 100%; display: flex; align-items: stretch; gap: 14px; margin-top: clamp(4px, 1.5vh, 14px);
+  text-align: left; min-height: 0;
+}
+.ws-railwrap { position: relative; flex: 1; min-width: 0; }
+.ws-rail {
+  list-style: none; margin: 0; padding: 14px 6px 16px; display: flex; gap: 16px;
+  overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+.ws-item { flex: none; width: clamp(236px, 70vw, 272px); scroll-snap-align: start; display: flex; }
+
+/* ---------- the big lever ---------- */
+.ws-lever {
+  flex: none; width: 92px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 12px 6px; margin: 14px 0 16px; background: var(--ink-3); color: var(--cream);
+  border: 2px solid color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 14px; cursor: pointer;
+  font: 500 .72rem var(--font-mono); letter-spacing: .06em; text-transform: uppercase; text-align: center;
+}
+.ws-lever:hover { border-color: var(--accent); }
+.ws-lever:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.ws-lever:disabled { opacity: .5; cursor: default; }
+.ws-lever-slot { position: relative; flex: 1; min-height: 70px; width: 16px; border-radius: 8px; background: #0B0E1E; }
+.ws-lever-knob {
+  position: absolute; left: 50%; top: 4px; width: 34px; height: 34px; margin-left: -17px; border-radius: 50%;
+  background: var(--red); box-shadow: 0 3px 0 var(--red-d); transition: top .3s cubic-bezier(.3, 1.4, .5, 1), background .3s;
+}
+.ws-lever.is-down .ws-lever-knob { top: calc(100% - 38px); background: var(--mint); box-shadow: 0 3px 0 #4C9B86; }
+
+/* ---------- a machine ---------- */
+.ws-machine {
+  position: relative; width: 100%; display: flex; flex-direction: column; gap: 8px; padding: 14px 14px 12px;
+  background: var(--ink-2); border: 2px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 16px;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, .25); transition: border-color .3s, box-shadow .3s, transform .3s;
+}
+.ws-machine.is-on { border-color: var(--accent); box-shadow: 0 8px 0 rgba(0, 0, 0, .25), 0 0 26px color-mix(in srgb, var(--accent) 35%, transparent); transform: translateY(-3px); }
+.ws-head { display: flex; align-items: center; gap: 10px; }
+.ws-lamp { width: 14px; height: 14px; border-radius: 50%; background: #3A3F63; transition: background .3s, box-shadow .3s; }
+.is-on .ws-lamp { background: var(--mint); box-shadow: 0 0 12px 3px var(--mint); }
+.ws-stamp {
+  flex: 1; font: 500 .68rem var(--font-mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent);
+}
+.ws-gear { width: 30px; height: 30px; color: var(--cream-d); opacity: .6; }
+.ws-gear svg { display: block; width: 100%; height: 100%; }
+.ws-gear-g { transform-origin: 20px 20px; }
+.is-on .ws-gear { color: var(--accent); opacity: 1; }
+.is-on .ws-gear-g { animation: ws-spin 3.2s linear infinite; }
+@keyframes ws-spin { to { transform: rotate(360deg); } }
+
+.ws-title { margin: 2px 0 0; font: 700 1.3rem/1.2 var(--font-serif); }
+.ws-teaser { margin: 0; color: var(--cream-d); font-size: .95rem; line-height: 1.45; }
+.ws-meter { height: 9px; border-radius: 5px; background: #0B0E1E; overflow: hidden; }
+.ws-fill { display: block; height: 100%; width: 0; border-radius: 5px; background: repeating-linear-gradient(45deg, var(--accent) 0 8px, color-mix(in srgb, var(--accent) 70%, #000) 8px 16px); transition: width .9s cubic-bezier(.2, .8, .2, 1); }
+.is-on .ws-fill { width: var(--p); }
+
+/* details open when the machine is on */
+.ws-details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+.is-on .ws-details { grid-template-rows: 1fr; }
+.ws-details-in { min-height: 0; overflow: hidden; font-size: .95rem; line-height: 1.5; }
+.is-on .ws-details-in { overflow-y: auto; max-height: 24vh; max-height: 24dvh; }
+.ws-details-in p { margin: 6px 0; }
+.ws-chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 8px 0; padding: 0; }
+.ws-chips li { padding: 2px 9px; border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); border-radius: 999px; font: 400 .75rem var(--font-mono); }
+.ws-links { display: flex; flex-wrap: wrap; gap: 4px 16px; font: 500 .85rem var(--font-mono); }
+.ws-links a, .ws-foot a { color: var(--amber); text-underline-offset: 4px; display: inline-flex; align-items: center; min-height: 32px; }
+.ws-nolink { color: var(--cream-d); font: 400 .8rem var(--font-mono); }
+
+.ws-switch {
+  display: flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 2px; padding: 0 4px; background: none;
+  border: 0; border-top: 1px dashed color-mix(in srgb, var(--cream) 25%, transparent); color: var(--cream); cursor: pointer;
+  font: 500 .82rem var(--font-mono);
+}
+.ws-switch:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.ws-track { position: relative; width: 46px; height: 24px; border-radius: 12px; background: #0B0E1E; transition: background .25s; flex: none; }
+.ws-thumb { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--cream-d); transition: left .25s cubic-bezier(.3, 1.4, .5, 1), background .25s; }
+.ws-switch[aria-pressed="true"] .ws-track { background: color-mix(in srgb, var(--mint) 35%, #0B0E1E); }
+.ws-switch[aria-pressed="true"] .ws-thumb { left: 25px; background: var(--mint); }
+
+.ws-ph { position: absolute; top: -9px; right: 12px; padding: 1px 8px; border-radius: 4px; background: var(--amber); color: var(--ink); font: 500 .62rem var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+.ws-empty { margin: 24px; color: var(--cream-d); }
+
+/* ---------- rail arrows ---------- */
+.ws-arrow {
+  position: absolute; top: 40%; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--accent);
+  background: var(--ink); color: var(--cream); font: 400 1.7rem/1 var(--font-serif); cursor: pointer; z-index: 2;
+  display: grid; place-items: center; padding: 0 0 4px;
+}
+.ws-arrow[hidden] { display: none; }
+.ws-arrow:hover { background: var(--accent); color: var(--ink); }
+.ws-arrow:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.ws-arrow-prev { left: -10px; } .ws-arrow-next { right: -10px; }
+
+.ws-foot { margin: 0; color: var(--cream-d); font: 400 .85rem var(--font-mono); }
+
+/* a warm glow on the whole floor once something is running */
+.floor.is-lit::before { border-top-color: var(--accent); }
+
+@media (max-height: 700px) { .ws .tagline { display: none; } .ws-teaser { font-size: .88rem; } }
+@media (max-width: 640px) {
+  .ws-bench { flex-direction: column; gap: 0; }
+  .ws-lever { width: 100%; flex-direction: row; margin: 6px 0 0; padding: 8px 14px; justify-content: center; }
+  .ws-lever-slot { flex: none; width: 70px; height: 16px; min-height: 0; }
+  .ws-lever-knob { top: -9px; left: 4px; margin-left: 0; transition: left .3s cubic-bezier(.3, 1.4, .5, 1), background .3s; }
+  .ws-lever.is-down .ws-lever-knob { top: -9px; left: calc(100% - 38px); }
+  .ws-arrow { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ws-gear-g { animation: none !important; }
+  .ws-machine, .ws-fill, .ws-details, .ws-thumb, .ws-lever-knob { transition: none !important; }
+}
+
+/* keep the room inside the screen: the rail scrolls, the room does not grow */
+.floor[data-floor="workshop"] { grid-template-columns: minmax(0, 1fr); }
+.ws { max-width: 100%; min-width: 0; }
+@media (max-width: 640px) {
+  .ws-lever-text { white-space: nowrap; }
+  .ws-lever { gap: 12px; }
+}

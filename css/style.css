@@ -1,0 +1,263 @@
+/* Hotel Akshara: layout and the elevator shell (cluster 1) */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+:focus-visible { outline: 3px solid var(--cream); outline-offset: 3px; }
+
+/* ---------- loader ---------- */
+.loader {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center;
+  background: var(--ink);
+  font-family: var(--font-hand);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: var(--amber);
+  transition: opacity .5s ease, visibility .5s;
+}
+.loader p { margin: 0; }
+.loader.is-done { opacity: 0; visibility: hidden; }
+
+/* ---------- page frame ---------- */
+.hotel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--panel-w);
+  height: 100vh;
+  height: 100dvh;
+}
+.stage { position: relative; overflow: hidden; overflow: clip; min-width: 0; }  /* clip: nothing can scroll the stage by focus */
+
+/* soft darkening while the elevator is travelling */
+.stage::after {
+  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 13, 30, .55));
+  opacity: 0; transition: opacity .25s ease;
+}
+.stage.is-moving::after { opacity: 1; }
+
+/* the hotel sign */
+.marquee {
+  position: absolute; top: 18px; left: 22px; z-index: 5; pointer-events: none;
+  font-family: var(--font-serif); font-weight: 700;
+  font-size: clamp(.95rem, 2.4vw, 1.35rem);
+  letter-spacing: .14em;
+  color: var(--amber);
+  text-shadow: 0 0 6px rgba(242, 184, 75, .7), 0 0 22px rgba(242, 184, 75, .35);
+}
+.marquee small {
+  display: block; margin-top: 2px;
+  font-family: var(--font-hand); font-weight: 500;
+  font-size: 1.15em; letter-spacing: 0;
+  color: var(--cream-d); text-shadow: none;
+}
+
+.nojs { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 24px; text-align: center; z-index: 6; }
+.nojs a { color: var(--amber); }
+
+/* ---------- the shaft: all floors stacked, we slide it ---------- */
+.shaft {
+  position: absolute; top: 0; left: 0; right: 0;
+  transform: translate3d(0, calc(var(--idx, 0) * -100vh), 0);
+  transform: translate3d(0, calc(var(--idx, 0) * -100dvh), 0);
+  will-change: transform;
+}
+
+/* ---------- a floor ---------- */
+.floor {
+  --accent: var(--amber);
+  position: relative; isolation: isolate; overflow: hidden; overflow: clip;
+  height: 100vh; height: 100dvh;
+  display: grid; place-items: end center;
+  padding: 76px 24px 16vh;
+  padding-bottom: 16dvh; /* the room stands on the tile floor */
+  background:
+    radial-gradient(70% 45% at 50% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 72%),
+    linear-gradient(180deg, var(--ink), var(--ink-2));
+}
+/* lower wall panel */
+.floor::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 16%; height: 26%; z-index: -1;
+  background: var(--ink-2);
+  border-top: 4px solid color-mix(in srgb, var(--accent) 50%, transparent);
+}
+/* checkered floor */
+.floor::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 16%; z-index: -1;
+  background: repeating-conic-gradient(var(--ink-3) 0 25%, var(--ink-2) 0 50%) 0 0 / 56px 56px;
+}
+
+.room {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  gap: clamp(8px, 1.6vh, 16px);
+  max-width: 640px;
+}
+.kicker {
+  margin: 0; font-size: .8rem; letter-spacing: .32em; text-transform: uppercase;
+  color: var(--accent);
+}
+.floor-name {
+  margin: 0; font-family: var(--font-serif); font-weight: 700;
+  font-size: clamp(2rem, 7vw, 4.4rem); line-height: 1.05;
+}
+.tagline {
+  margin: 0; max-width: 30ch;
+  font-family: var(--font-hand); font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+  color: var(--cream-d);
+}
+
+/* placeholder door with a hanging sign (replaced floor by floor in later clusters) */
+.door-prop {
+  position: relative;
+  margin-top: clamp(10px, 3vh, 28px);
+  margin-bottom: -6px; /* sink the door into the floor line */
+  width: clamp(92px, 18vh, 150px);
+  height: clamp(125px, 28vh, 225px);
+  background: var(--door);
+  border: 6px solid var(--accent); border-bottom: 0;
+  border-radius: 70px 70px 0 0;
+  box-shadow: inset 0 0 0 8px var(--ink-3);
+}
+.door-prop::after { /* door knob */
+  content: ""; position: absolute; right: 14%; top: 56%;
+  width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+}
+.plate {
+  position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+  min-width: 34px; padding: 3px 8px; border-radius: 4px;
+  background: var(--accent); color: var(--ink);
+  font-weight: 500; font-size: .95rem; text-align: center;
+}
+.sign {
+  position: absolute; left: -14%; top: 60%; width: 128%;
+  margin: 0; padding: 8px 10px;
+  background: var(--cream); color: var(--ink);
+  border-radius: 4px;
+  font-family: var(--font-hand); font-size: 1.2rem; line-height: 1.1; text-align: center;
+  transform-origin: 50% -10px;
+  transform: rotate(-3deg);
+  animation: sway 5s ease-in-out infinite alternate;
+}
+.sign::before { /* nail */
+  content: ""; position: absolute; top: -10px; left: 50%; margin-left: -4px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+}
+@keyframes sway { from { transform: rotate(-3deg); } to { transform: rotate(2.5deg); } }
+
+/* ---------- the elevator panel ---------- */
+.panel {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: safe center;
+  gap: 14px; padding: 14px 8px;
+  background: var(--ink-2);
+  border-left: 4px solid color-mix(in srgb, var(--amber) 55%, var(--ink));
+  overflow-y: auto; overflow-x: hidden; scrollbar-width: none;
+}
+.panel::-webkit-scrollbar { display: none; }
+
+.display {
+  position: relative; flex: none;
+  width: 64px; height: 56px; display: grid; place-items: center;
+  background: #0A0D1E; border: 2px solid var(--amber); border-radius: 8px;
+  box-shadow: inset 0 0 12px rgba(242, 184, 75, .15);
+}
+.display span {
+  font-size: 1.7rem; font-weight: 500; color: var(--amber);
+  text-shadow: 0 0 10px rgba(242, 184, 75, .7);
+}
+.arrow { position: absolute; top: 5px; right: 6px; width: 0; height: 0;
+         border-left: 5px solid transparent; border-right: 5px solid transparent; opacity: 0; }
+.arrow.up   { border-bottom: 7px solid var(--amber); opacity: 1; }
+.arrow.down { border-top: 7px solid var(--amber); opacity: 1; }
+
+.buttons { display: flex; flex-direction: column; gap: 10px; flex: none; }
+.fbtn {
+  width: 44px; height: 44px; padding: 0; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 2px solid var(--amber); background: var(--ink-3); color: var(--cream);
+  font: 500 .95rem var(--font-mono);
+  cursor: pointer;
+  transition: background .2s, color .2s, box-shadow .2s, transform .1s;
+}
+.fbtn:hover { background: #2D3566; }
+.fbtn:active { transform: scale(.94); }
+.fbtn[aria-current="true"] {
+  background: var(--amber); color: var(--ink);
+  box-shadow: 0 0 16px rgba(242, 184, 75, .6);
+}
+.fbtn.is-target { animation: blink .5s steps(2) infinite; }
+@keyframes blink { 50% { box-shadow: 0 0 0 4px rgba(242, 184, 75, .45); } }
+
+.extras { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 6px; flex: none; }
+.sound {
+  width: 72px; min-height: 44px; padding: 6px 4px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font: 500 .7rem/1.25 var(--font-mono); color: var(--cream);
+  background: transparent; border: 1.5px solid color-mix(in srgb, var(--cream) 45%, transparent);
+  border-radius: 999px; cursor: pointer;
+}
+.sound-state { color: var(--cream-d); }
+.sound[aria-pressed="true"] { border-color: var(--amber); }
+.sound[aria-pressed="true"] .sound-state { color: var(--amber); }
+.staff {
+  display: block; padding: 8px 4px; min-height: 44px;
+  font-size: .7rem; line-height: 1.3; text-align: center;
+  color: var(--cream-d); text-decoration: underline; text-underline-offset: 3px;
+}
+.staff:hover { color: var(--amber); }
+
+/* small screens */
+@media (max-width: 640px) {
+  :root { --panel-w: 72px; }
+  .panel { padding: 14px 6px; }
+  .floor { padding: 66px 14px 16vh; padding-bottom: 16dvh; }
+  .marquee { top: 14px; left: 14px; }
+  .display { width: 56px; }
+  .sound { width: 60px; }
+}
+@media (max-height: 600px) {
+  .panel { gap: 8px; }
+  .buttons { gap: 6px; }
+  .fbtn { width: 40px; height: 40px; }
+}
+
+/* tiny shake while moving */
+.stage.is-moving .floor > * { animation: rumble .12s linear infinite; }
+@keyframes rumble {
+  0% { translate: 0 0; } 25% { translate: 1px 0; } 50% { translate: 0 1px; } 75% { translate: -1px 0; }
+}
+
+/* the floor number flashes when the elevator arrives (cluster 10) */
+.display span.is-ding { animation: ding .9s ease-out; }
+@keyframes ding { 0% { transform: scale(1.5); text-shadow: 0 0 22px #fff; } 100% { transform: none; } }
+.display:has(.is-ding) { animation: dingbox .9s ease-out; }
+@keyframes dingbox { 0% { box-shadow: 0 0 22px 4px rgba(242, 184, 75, .8), inset 0 0 12px rgba(242, 184, 75, .15); } }
+
+/* ---------- the key ring (js/keys.js) ---------- */
+.keyring {
+  position: absolute; top: 12px; right: 12px; z-index: 5;
+  display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 2px;
+  max-width: 60%; margin: 0; padding: 0; list-style: none; pointer-events: none;
+}
+.keyring:empty { display: none; }
+.key { width: 30px; height: 30px; display: grid; place-items: center; filter: drop-shadow(0 0 6px rgba(242, 184, 75, .45)); }
+.key.is-new { animation: keypop .8s cubic-bezier(.3, 1.6, .5, 1); }
+/* many keys: tuck the ring under the hotel name on narrow screens */
+@media (max-width: 640px) {
+  .keyring { top: 64px; right: 12px; flex-wrap: nowrap; max-width: calc(100% - 24px); }
+  .key { width: 24px; height: 24px; margin-left: -7px; }
+}
+@keyframes keypop { from { transform: scale(2.6) rotate(-40deg); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hotel Akshara</title>
+<meta name="description" content="Akshara Kabra's portfolio, built as a small night-time hotel. Checked in, not checked out.">
+<meta name="theme-color" content="#12162B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,700&display=swap">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/entrance.css">
+<link rel="stylesheet" href="css/lobby.css">
+<link rel="stylesheet" href="css/workshop.css">
+<link rel="stylesheet" href="css/trophy.css">
+<link rel="stylesheet" href="css/gallery.css">
+<link rel="stylesheet" href="css/minibar.css">
+<link rel="stylesheet" href="css/archive.css">
+<link rel="stylesheet" href="css/roof.css">
+<link rel="stylesheet" href="css/basement.css">
+<link rel="stylesheet" href="css/secrets.css">
+<noscript><style>.loader{display:none}</style></noscript>
+
+<!-- Scripts run in this order. app.js creates `Hotel`; everything after it
+     plugs in. Later clusters add one file per floor in js/floors/ and list
+     it at the end of this block. -->
+<script src="js/content.js" defer></script>
+<script src="js/audio.js" defer></script>
+<script src="js/elevator.js" defer></script>
+<script src="js/entrance.js" defer></script>
+<script src="js/app.js" defer></script>
+<script src="js/keys.js" defer></script>
+<script src="js/sound.js" defer></script>
+<script src="js/floors/lobby.js" defer></script>
+<script src="js/floors/workshop.js" defer></script>
+<script src="js/floors/trophy.js" defer></script>
+<script src="js/floors/gallery.js" defer></script>
+<script src="js/floors/minibar.js" defer></script>
+<script src="js/floors/archive.js" defer></script>
+<script src="js/floors/roof.js" defer></script>
+<script src="js/floors/basement.js" defer></script>
+<script src="js/secrets.js" defer></script>
+</head>
+<body>
+
+<div class="loader" id="loader" role="status">
+  <p>Checking in...</p>
+</div>
+
+<h1 class="sr-only">Hotel Akshara, the portfolio of Akshara Kabra</h1>
+
+<div class="hotel">
+  <div class="stage" id="stage">
+    <div class="marquee" aria-hidden="true">
+      HOTEL AKSHARA
+      <small>checked in, not checked out</small>
+    </div>
+    <div class="shaft" id="shaft"></div>
+    <noscript>
+      <p class="nojs">This hotel runs on JavaScript. The <a href="staff.html">staff entrance</a> works without it.</p>
+    </noscript>
+  </div>
+
+  <aside class="panel" aria-label="Elevator controls">
+    <div class="display" aria-hidden="true">
+      <i class="arrow" id="arrow"></i>
+      <span id="display">L</span>
+    </div>
+    <nav class="buttons" id="buttons" aria-label="Choose a floor"></nav>
+    <div class="extras">
+      <button type="button" class="sound" id="sound" aria-pressed="false">
+        <span>Sound</span><span class="sound-state" id="sound-state">off</span>
+      </button>
+      <a class="staff" href="staff.html">Staff entrance</a>
+    </div>
+  </aside>
+</div>
+
+<div class="sr-only" id="announcer" aria-live="polite"></div>
+
+</body>
+</html>

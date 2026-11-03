@@ -1,0 +1,114 @@
+/* Lobby (cluster 3): Foxie at the front desk */
+
+.floor.lobby {
+  display: block; padding: 0; background: #1B2040;
+  /* the window changes with the visitor's local time (classes set by js/floors/lobby.js) */
+  --sky-a: #0A0D1E; --sky-b: #1B2040; --stars: 1; --moon: 1; --sun: 0; --sun-y: 0px; --fuji: #12162B;
+}
+.floor.lobby.t-morning   { --sky-a: #4B5CA8; --sky-b: #F7B58A; --stars: .2; --moon: 0; --sun: 1; --sun-y: 34px;  --fuji: #2B3160; }
+.floor.lobby.t-afternoon { --sky-a: #7FB2D9; --sky-b: #D6EAF0; --stars: 0;  --moon: 0; --sun: 1; --sun-y: -30px; --fuji: #3A4285; }
+.floor.lobby.t-evening   { --sky-a: #3B1F4A; --sky-b: #E8503A; --stars: .45; --moon: 0; --sun: 1; --sun-y: 42px;  --fuji: #241335; }
+.floor.lobby::before, .floor.lobby::after { display: none; }
+
+.lb-scene { position: absolute; inset: 0; overflow: hidden; }
+.lb-svg {
+  position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  display: block; overflow: visible;
+  aspect-ratio: 640 / 520; width: auto;
+  /* fill the height on wide screens; on phones zoom in on the desk instead of shrinking */
+  height: min(100%, calc((100vw - var(--panel-w)) * 1.38));
+}
+.lobby[inert] .lb-svg * { animation-play-state: paused !important; }
+
+/* ---------- clickable parts ---------- */
+.lb-svg .hit { cursor: pointer; outline: none; -webkit-tap-highlight-color: transparent; }
+.lb-svg .focus-ring { fill: none; stroke: #F4E9D3; stroke-width: 3; opacity: 0; }
+.lb-svg .hit:focus-visible .focus-ring { opacity: 1; }
+
+/* ---------- Foxie ---------- */
+.fx-head { transform-origin: 320px 262px; animation: lb-nod 1.8s ease-in-out infinite alternate; }
+@keyframes lb-nod { from { transform: rotate(-1.4deg); } to { transform: rotate(1.8deg) translateY(2px); } }
+
+.fx-tail { transform-origin: 374px 314px; animation: lb-wag 2.6s ease-in-out infinite alternate; }
+@keyframes lb-wag { from { transform: rotate(-3deg); } to { transform: rotate(5deg); } }
+
+.fx-ear-l { transform-origin: 282px 196px; transition: transform .25s ease; }
+.fx-ear-r { transform-origin: 358px 198px; animation: lb-twitch 7s infinite; transition: transform .25s ease; }
+@keyframes lb-twitch { 0%, 86%, 100% { transform: rotate(0); } 90% { transform: rotate(8deg); } 94% { transform: rotate(-2deg); } }
+.perk .fx-ear-l { transform: rotate(-8deg) scale(1.06); }
+.perk .fx-ear-r { animation: none; transform: rotate(8deg) scale(1.06); }
+
+.eyes-open { transform-origin: 320px 213px; animation: lb-blink 4.8s infinite; }
+@keyframes lb-blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.08); } }
+.eyes-happy { opacity: 0; }
+.is-happy .eyes-open, .sip .eyes-open { opacity: 0; }
+.is-happy .eyes-happy, .sip .eyes-happy { opacity: 1; }
+
+.mouth-open { opacity: 0; }
+.talk .mouth-open { animation: lb-yap .26s steps(1) infinite; }
+@keyframes lb-yap { 0% { opacity: 0; } 50% { opacity: 1; } }
+
+/* the coffee sip */
+.fx-mug { transform-origin: 320px 304px; transition: transform .45s cubic-bezier(.3, .7, .3, 1); }
+.sip .fx-mug { transform: translateY(-22px) rotate(-5deg); }
+.sip .fx-head { animation: none; transform: rotate(-5deg) translateY(-3px); transition: transform .4s ease; }
+.steam { fill: none; stroke: #F4E9D3; stroke-width: 2; stroke-linecap: round; opacity: 0; animation: lb-steam 3.2s ease-in-out infinite; }
+.steam.s2 { animation-delay: 1.4s; }
+@keyframes lb-steam { 0% { opacity: 0; transform: translateY(5px); } 35% { opacity: .55; } 100% { opacity: 0; transform: translateY(-9px); } }
+
+/* ---------- the bell ---------- */
+#lb-bell-dome { transform-origin: 238px 316px; }
+.ring #lb-bell-dome { animation: lb-wobble .9s ease-out; }
+.lb-btn { transition: transform .1s; }
+.ring .lb-btn { transform: translateY(3px); }
+@keyframes lb-wobble {
+  0% { transform: rotate(0); } 12% { transform: rotate(-9deg); } 28% { transform: rotate(7deg); }
+  44% { transform: rotate(-5deg); } 60% { transform: rotate(3deg); } 78% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0); }
+}
+.lb-ding { opacity: 0; fill: none; stroke: #F4E9D3; stroke-width: 3; stroke-linecap: round; }
+.ring .lb-ding { animation: lb-ding .9s ease-out; }
+@keyframes lb-ding { 0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; } }
+.lb-ping { fill: none; stroke: #F2B84B; stroke-width: 2; transform-origin: 238px 302px; animation: lb-ping 1.8s ease-out infinite; }
+@keyframes lb-ping { 0% { transform: scale(.7); opacity: .9; } 100% { transform: scale(1.4); opacity: 0; } }
+.lb-ringme { font-family: var(--font-hand); font-size: 20px; fill: #F4E9D3; animation: lb-bob 1.6s ease-in-out infinite alternate; }
+@keyframes lb-bob { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+.rung .lb-ping, .rung .lb-ringme { display: none; }
+
+/* the sleeping little one */
+.zzz { font: 700 9px var(--font-mono); fill: #F4E9D3; opacity: 0; animation: lb-zzz 3s ease-in infinite; }
+.zzz.z2 { animation-delay: 1.2s; }
+@keyframes lb-zzz { 0% { opacity: 0; transform: translate(0, 0); } 25% { opacity: .9; } 100% { opacity: 0; transform: translate(6px, -12px); } }
+
+/* ---------- Foxie's speech bubble ---------- */
+.lb-bubble {
+  position: absolute; z-index: 4; left: 10px; bottom: 50%;
+  width: max-content; max-width: min(340px, calc(100% - 20px));
+  padding: 12px 16px 14px;
+  background: #F4E9D3; color: #12162B; border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .38);
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.lb-bubble.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.lb-bubble.has-chips { max-width: min(470px, calc(100% - 20px)); } /* wider, so the menu wraps to two rows */
+.lb-bubble::after { /* tail pointing at Foxie */
+  content: ""; position: absolute; bottom: -9px; left: var(--tail, 50%); margin-left: -9px;
+  border: 9px solid transparent; border-top-color: #F4E9D3; border-bottom: 0;
+}
+.lb-name {
+  display: block; margin-bottom: 5px;
+  font: 500 .66rem/1 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; color: #B3263E;
+}
+.lb-say { margin: 0; font-family: var(--font-hand); font-size: 1.4rem; line-height: 1.12; }
+.lb-rest { visibility: hidden; }
+.lb-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.lb-chips[hidden] { display: none; }
+.lb-chip {
+  min-height: 44px; padding: 0 14px; border-radius: 999px;
+  border: 2px solid #12162B; background: transparent; color: #12162B; cursor: pointer;
+  font: 500 .8rem var(--font-mono);
+  transition: background .15s, color .15s;
+}
+.lb-chip:hover { background: #12162B; color: #F4E9D3; }
+.lb-chip:focus-visible { outline: 3px solid #B3263E; outline-offset: 2px; }

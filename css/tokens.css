@@ -1,0 +1,22 @@
+/* Midnight Motel: the design tokens. Change a color here and it changes everywhere. */
+:root {
+  /* palette */
+  --ink:      #12162B;  /* night sky, main background */
+  --ink-2:    #1B2040;  /* walls, panels */
+  --ink-3:    #232850;  /* floor tiles, buttons */
+  --door:     #2B3160;  /* elevator and room doors */
+  --amber:    #F2B84B;  /* lamp light, brass, the main accent */
+  --red:      #B3263E;  /* velvet red, carpets, uniforms */
+  --red-d:    #8A1B2E;
+  --cream:    #F4E9D3;  /* paper, main text */
+  --cream-d:  #D9C7A5;  /* softer text */
+  --mint:     #7FD1B9;  /* plants, small highlights */
+
+  /* type */
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-mono:  'DM Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --font-hand:  'Caveat', 'Comic Sans MS', cursive;
+
+  /* layout */
+  --panel-w: 92px;
+}

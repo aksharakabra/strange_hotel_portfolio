@@ -1,0 +1,44 @@
+/* The Roof (cluster 11) */
+.floor[data-floor="roof"] { grid-template-columns: minmax(0, 1fr); }
+.rf { width: min(720px, 100%); max-width: 100%; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: clamp(6px, 1.3vh, 12px); }
+.rf .floor-name { font-size: clamp(1.8rem, 5.5vw, 3.4rem); }
+.rf-door { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 6px; }
+.rf-lock { width: 74px; height: 92px; padding: 6px; background: none; border: 0; cursor: pointer; transform-origin: 50% 0; }
+.rf-lock svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 4px 0 rgba(0, 0, 0, .35)); }
+.rf-lock:focus-visible { outline: 3px solid var(--amber); outline-offset: 4px; border-radius: 10px; }
+.rf-lock.is-rattle { animation: rf-rattle .5s ease; }
+@keyframes rf-rattle { 0%, 100% { transform: none; } 20% { transform: rotate(-14deg); } 40% { transform: rotate(12deg); } 60% { transform: rotate(-8deg); } 80% { transform: rotate(5deg); } }
+.rf-lock.is-open { transform: translateY(-10px) rotate(-24deg); opacity: .5; transition: transform .5s, opacity .5s; }
+.rf-sign { margin: 0; padding: 6px 14px; background: var(--ink-3); border: 2px dashed color-mix(in srgb, var(--accent) 60%, transparent); border-radius: 6px; font: 500 .85rem var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+.rf-date { margin: 0; color: var(--accent); font: 500 1.3rem var(--font-hand); }
+.rf-say { margin: 0; min-height: 3.2em; max-width: 44ch; color: var(--cream-d); font: 400 .88rem/1.45 var(--font-mono); }
+.rf-peek { width: 100%; display: grid; gap: 10px; animation: rf-in .6s ease; }
+.rf-peek[hidden] { display: none; }
+@keyframes rf-in { from { opacity: 0; transform: translateY(10px); } }
+.rf-peek-t { margin: 0; font: 700 1.1rem var(--font-serif); }
+.rf-sky { position: relative; height: clamp(120px, 24vh, 190px); overflow: hidden; border-radius: 12px; border: 2px solid var(--accent); background: linear-gradient(180deg, #0B0E1E, #241C46 70%, #5B3A6B); }
+.rf-sky i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; animation: rf-tw 3s ease-in-out infinite; }
+@keyframes rf-tw { 50% { opacity: .2; transform: scale(.6); } }
+.rf-moon { position: absolute; top: 12%; right: 12%; width: 34px; height: 34px; border-radius: 50%; background: #F4E9D3; box-shadow: -9px 4px 0 0 #0B0E1E inset, 0 0 20px rgba(244, 233, 211, .5); }
+.rf-city { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 38%; }
+.rf-shoot { position: absolute; top: 14%; left: 10%; width: 46px; height: 46px; background: none; border: 0; cursor: pointer; }
+.rf-shoot::before { content: ""; position: absolute; top: 20px; left: 8px; width: 40px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, transparent, #fff); transform: rotate(-30deg); opacity: .5; }
+.rf-shoot.is-go::before { animation: rf-go 1s ease-out; }
+@keyframes rf-go { from { transform: translate(0, 0) rotate(-30deg); opacity: 1; } to { transform: translate(180px, 100px) rotate(-30deg); opacity: 0; } }
+.rf-shoot:focus-visible { outline: 3px solid var(--amber); }
+.rf-letter { padding: 12px 16px; background: var(--cream); color: var(--ink); border-radius: 4px 12px 12px 4px; border-left: 8px solid var(--red); text-align: left; }
+.rf-letter h4 { margin: 0 0 4px; font: 500 1.4rem var(--font-hand); }
+.rf-letter p { margin: 0 0 4px; font-size: .92rem; line-height: 1.45; }
+.rf-sig { color: #464C69; font: 400 .78rem var(--font-mono); }
+.rf-wish { margin: 0; min-height: 1.3em; color: var(--amber); font: 500 1rem var(--font-hand); }
+@media (max-height: 760px) { .rf .tagline { display: none; } .rf-letter p { font-size: .85rem; } }
+@media (max-width: 520px) { .rf .tagline { display: none; } }
+@media (prefers-reduced-motion: reduce) { .rf-lock.is-rattle, .rf-sky i, .rf-peek, .rf-shoot.is-go::before { animation: none !important; } }
+
+/* once opened, shrink the door so the sky and the letter fit on short screens */
+.is-open .rf .tagline, .is-open .rf-sign, .is-open .rf-say, .is-open .rf-date { display: none; }
+.is-open .rf-lock { width: 34px; height: 42px; padding: 0; margin-bottom: -4px; }
+.is-open .rf-sky { height: clamp(90px, 17vh, 150px); }
+.is-open .rf { gap: 6px; }
+.rf-peek-t { font-size: 1rem; }
+@media (max-height: 760px) { .rf-letter { padding: 8px 14px; } .rf-letter h4 { font-size: 1.2rem; } .rf-letter p { font-size: .82rem; margin-bottom: 2px; } }
