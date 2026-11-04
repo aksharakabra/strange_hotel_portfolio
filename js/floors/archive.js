@@ -89,7 +89,7 @@
     card.setAttribute('aria-live', 'polite');
     var cTitle = el('h3', 'ar-card-title', A.hint || 'Pull a book off the shelf.');
     var cMeta = el('p', 'ar-card-meta');
-    var cText = el('p', 'ar-card-text');
+    var cText = el('p', 'ar-card-text', A.how || '');
     var cTags = el('ul', 'ar-tags');
     var cLink = el('p', 'ar-card-link');
     var ph = el('span', 'ar-ph', 'Placeholder'); ph.hidden = true;

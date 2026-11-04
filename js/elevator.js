@@ -148,23 +148,33 @@
 
     /* ----- mouse wheel / trackpad ----- */
     var wheelAcc = 0;
+    var innerUntil = 0;   // time until which a wheel at a panel's edge is still the same scroll gesture
     var wheelTimer = null;
     stage.addEventListener('wheel', function (e) {
       if (e.ctrlKey) return; // pinch-zoom
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; // sideways scroll (e.g. the Workshop rail)
       /* a floor can opt out with data-scrollable (for long reading panels later) */
       var scroller = e.target.closest && e.target.closest('[data-scrollable]');
-      if (scroller) {
+      if (scroller && scroller.scrollHeight > scroller.clientHeight + 1) {
         var atTop = scroller.scrollTop <= 0;
         var atBottom = scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 1;
-        if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) return;
+        if ((e.deltaY < 0 && !atTop) || (e.deltaY > 0 && !atBottom)) {
+          innerUntil = performance.now() + 700;   // the panel is scrolling: leave the wheel alone
+          return;
+        }
+        if (performance.now() < innerUntil) {     // still the same flick (trackpad inertia): do not change floor
+          e.preventDefault();
+          innerUntil = performance.now() + 350;
+          wheelAcc = 0;
+          return;
+        }
       }
       e.preventDefault();
       if (moving || performance.now() < lockUntil) return;
       wheelAcc += e.deltaY;
       clearTimeout(wheelTimer);
       wheelTimer = setTimeout(function () { wheelAcc = 0; }, 160);
-      if (Math.abs(wheelAcc) >= 50) {
+      if (Math.abs(wheelAcc) >= 90) {
         step(wheelAcc > 0 ? 1 : -1);
         wheelAcc = 0;
       }
@@ -173,17 +183,22 @@
     /* ----- touch swipe (swipe up = next floor down, like scrolling) ----- */
     var startY = null;
     var startX = null;
+    var ignoreSwipe = false;
     stage.addEventListener('touchstart', function (e) {
       if (e.touches.length !== 1) { startY = null; return; }
       startY = e.touches[0].clientY;
       startX = e.touches[0].clientX;
+      /* a swipe that starts on a scrolling panel scrolls the panel, never the elevator */
+      var sc = e.target.closest && e.target.closest('[data-scrollable]');
+      ignoreSwipe = !!(sc && sc.scrollHeight > sc.clientHeight + 1);
     }, { passive: true });
     stage.addEventListener('touchend', function (e) {
       if (startY === null) return;
       var dy = startY - e.changedTouches[0].clientY;
       var dx = startX - e.changedTouches[0].clientX;
       startY = null;
-      if (Math.abs(dy) > 48 && Math.abs(dy) > Math.abs(dx) * 1.4) step(dy > 0 ? 1 : -1);
+      if (ignoreSwipe) { ignoreSwipe = false; return; }
+      if (Math.abs(dy) > 64 && Math.abs(dy) > Math.abs(dx) * 1.6) step(dy > 0 ? 1 : -1);
     }, { passive: true });
 
     /* ----- address bar: index.html#workshop ----- */

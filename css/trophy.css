@@ -11,7 +11,7 @@
 .tr-keys { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px 6px; }
 .tr-hook { display: flex; justify-content: center; }
 .tr-key {
-  position: relative; display: block; width: 100%; max-width: 110px; height: clamp(76px, 15vh, 122px);
+  position: relative; display: block; width: 100%; max-width: 110px; height: clamp(58px, 11.5vh, 96px);
   background: none; border: 0; padding: 0; cursor: pointer; color: var(--cream);
 }
 .tr-key:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; border-radius: 8px; }
@@ -25,10 +25,11 @@
 .tr-key.is-out .tr-swing { transform: rotate(-16deg) translateY(4px); filter: drop-shadow(0 0 10px var(--k)); animation: tr-sway 2.4s ease-in-out .5s infinite; }
 @keyframes tr-sway { 50% { transform: rotate(-9deg) translateY(4px); } }
 .tr-num { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font: 500 .68rem var(--font-mono); color: var(--cream-d); }
-.tr-key.is-collected .tr-num::after { content: " \2713"; color: var(--mint); }
+.tr-key.is-collected .tr-swing { filter: drop-shadow(0 0 6px var(--k)); }
+.tr-key.is-collected .tr-num { color: var(--k); }
 
 .tr-tag {
-  width: min(560px, 100%); padding: 12px 18px 12px; background: var(--cream); color: var(--ink); border-radius: 6px 6px 12px 12px;
+  display: flex; gap: 14px; align-items: stretch; width: min(640px, 100%); padding: 12px 18px 12px; background: var(--cream); color: var(--ink); border-radius: 6px 6px 12px 12px;
   position: relative; box-shadow: 0 6px 0 rgba(0, 0, 0, .25); text-align: left; min-height: 6.2rem;
 }
 .tr-tag::before { content: ""; position: absolute; top: -9px; left: 22px; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); border: 3px solid #B9A58A; }
@@ -50,3 +51,23 @@
 @media (max-height: 700px) { .tr .tagline { display: none; } .tr-tag { min-height: 5.2rem; } }
 @media (max-width: 520px) { .tr-board { padding: 8px 6px 4px; } .tr-key { height: clamp(66px, 11vh, 100px); } }
 @media (prefers-reduced-motion: reduce) { .tr-swing, .tr-tag.is-pop { transition: none !important; animation: none !important; } .tr-key.is-out .tr-swing { animation: none !important; } }
+
+/* the little door that opens on the certificate */
+.tr-door { position: relative; flex: none; width: 92px; min-height: 104px; perspective: 500px; background: #0B0E1E; border-radius: 6px 6px 2px 2px; overflow: hidden; border: 3px solid var(--ink-3); }
+.tr-thumb { position: absolute; inset: 0; display: grid; place-items: center; background: #FFFDF7; }
+.tr-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tr-thumb-ph { box-sizing: border-box; max-width: calc(100% - 12px); overflow-wrap: anywhere; padding: 6px; color: #464C69; text-align: center; font: 400 .62rem/1.3 var(--font-mono); border: 2px dashed #B8AC8C; margin: 6px; border-radius: 4px; }
+.tr-leaf { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(135deg, #4A3F78, #2B3160); transform-origin: left center; transition: transform .7s cubic-bezier(.4, 0, .2, 1); }
+.tr-leaf-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--amber); color: var(--amber); font: 500 .9rem var(--font-mono); }
+.tr-door.is-open .tr-leaf { transform: rotateY(-115deg); }
+.tr-info { flex: 1; min-width: 0; }
+.tr-tag-learned { margin: 4px 0 0; font-size: .86rem; line-height: 1.35; }
+.tr-tag-learned b { font-weight: 700; }
+.tr-skills { display: flex; flex-wrap: wrap; gap: 4px; list-style: none; margin: 6px 0 0; padding: 0; }
+.tr-skills li { padding: 0 8px; border: 1px solid #B8AC8C; border-radius: 999px; font: 400 .7rem var(--font-mono); }
+.tr-tag { min-height: 7.6rem; }
+.tr-tag-opens { font-size: 1.1rem; margin-top: 4px; }
+.tr-count { max-width: 52ch; }
+@media (max-height: 860px) { .tr .tagline { display: none; } }
+@media (max-width: 520px) { .tr-door { width: 64px; min-height: 80px; } .tr-tag { padding: 10px 12px; gap: 10px; } .tr-tag-learned { font-size: .8rem; } }
+@media (prefers-reduced-motion: reduce) { .tr-leaf { transition: none !important; } }

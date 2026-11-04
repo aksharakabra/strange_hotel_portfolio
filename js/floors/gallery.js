@@ -84,6 +84,45 @@
     }
     wall.appendChild(rail);
 
+    /* arrows (all pointer types) and hover auto-scroll near the edges (mouse) */
+    function arrow(dir, label, ch) {
+      var b = el('button', 'gl-arrow gl-arrow-' + (dir < 0 ? 'prev' : 'next'), ch);
+      b.type = 'button';
+      b.setAttribute('aria-label', label);
+      b.addEventListener('click', function () {
+        rail.scrollBy({ left: Math.max(180, rail.clientWidth * 0.7) * dir, behavior: reduce ? 'auto' : 'smooth' });
+      });
+      return b;
+    }
+    var prev = arrow(-1, 'Previous posters', '\u2039');
+    var next = arrow(1, 'Next posters', '\u203A');
+    wall.appendChild(prev); wall.appendChild(next);
+    function edges() {
+      var max = rail.scrollWidth - rail.clientWidth - 2;
+      prev.hidden = rail.scrollLeft <= 2;
+      next.hidden = rail.scrollLeft >= max;
+    }
+    rail.addEventListener('scroll', edges, { passive: true });
+    window.addEventListener('resize', edges);
+    setTimeout(edges, 0);
+    document.addEventListener('hotel:arrive', function () { setTimeout(edges, 50); });
+
+    var edgeDir = 0, edgeRaf = 0;
+    function edgeLoop() {
+      edgeRaf = 0;
+      if (!edgeDir) return;
+      rail.scrollLeft += edgeDir * 12;
+      edgeRaf = requestAnimationFrame(edgeLoop);
+    }
+    wall.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var w = wall.getBoundingClientRect();
+      var zone = Math.min(130, w.width * 0.2), x = e.clientX - w.left;
+      edgeDir = x < zone ? -(1 - x / zone) : (x > w.width - zone ? 1 - (w.width - x) / zone : 0);
+      if (edgeDir && !edgeRaf) edgeRaf = requestAnimationFrame(edgeLoop);
+    });
+    wall.addEventListener('pointerleave', function () { edgeDir = 0; });
+
     var dark = el('div', 'gl-dark');
     dark.setAttribute('aria-hidden', 'true');
     wall.appendChild(dark);

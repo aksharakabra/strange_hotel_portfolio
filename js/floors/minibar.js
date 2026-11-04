@@ -77,7 +77,7 @@
     if (!groups.length) inside.appendChild(el('p', 'mb-empty', M.empty || 'The fridge is empty.'));
 
     var door = el('div', 'mb-door');
-    door.setAttribute('aria-hidden', 'true');
+    door.setAttribute('aria-hidden', 'true');   // the Open button below is the accessible way in
     door.appendChild(el('span', 'mb-handle'));
     door.appendChild(el('span', 'mb-door-t', floor.label + ' · MINIBAR'));
 
@@ -129,6 +129,14 @@
       }
     }
     toggle.addEventListener('click', function () { setOpen(!opened); });
+    /* the door itself: tap it, or slide it sideways, to open (the button stays for keyboards) */
+    var dragX = null;
+    door.addEventListener('pointerdown', function (e) { dragX = e.clientX; });
+    door.addEventListener('pointermove', function (e) {
+      if (dragX !== null && !opened && Math.abs(e.clientX - dragX) > 24) { dragX = null; setOpen(true); }
+    });
+    door.addEventListener('pointerup', function () { dragX = null; });
+    door.addEventListener('click', function () { if (!opened) setOpen(true); });
     document.addEventListener('hotel:depart', function () { if (opened) setOpen(false); });
     setOpen(false);
   });

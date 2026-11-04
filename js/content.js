@@ -97,16 +97,17 @@ window.HOTEL = {
       { title: 'Data structures assignment (IC-2K25-06)', blurb: 'Data structures, written in C++.', description: 'Data structures coursework written in C++. (Edit this line to say what it covers.)', tech: ['C++', 'Data structures'], code: 'https://github.com/aksharakabra/IC-2K25-06_DS_AKSHARA_KABRA', live: '' }
     ],
     /* Certificates feed the Trophy Room (one key each) AND the Staff page. `url` can be a LinkedIn
-       link or a file in assets/ (e.g. 'assets/cert1.jpg'). `type` and `opens` are for the Trophy Room. */
+       link or a file in assets/ (e.g. 'assets/cert1.jpg'). `type`, `opens`, `skills`, `learned` and `image` (a picture of the certificate)
+       are shown in the Trophy Room when you open a key. */
     certificates: [
-      { placeholder: true, name: 'BE10X AI Tools Workshop', issuer: 'BE10X', year: '', type: 'Completion', opens: 'Opens: the drawer of AI tools', url: '' },
-      { placeholder: true, name: 'SQL 70: from basics to windows', issuer: 'DevTown', year: '', type: 'Completion', opens: 'Opens: the filing cabinet of tables', url: '' },
-      { placeholder: true, name: 'Smart India Hackathon', issuer: 'Smart India Hackathon', year: '', type: 'Participation', opens: 'Opens: the all-night team room', url: '' },
-      { placeholder: true, name: '5-day bootcamp: DBMS and SQL Mastery', issuer: 'DevTown', year: '', type: 'Participation', opens: 'Opens: the vault of queries', url: '' },
-      { placeholder: true, name: 'Data Science Career Roadmap session', issuer: 'Add issuer', year: '', type: 'Completion', opens: 'Opens: the map room', url: '' },
-      { placeholder: true, name: 'Microsoft student certificate', issuer: 'DevTown x Microsoft', year: '', type: 'Certificate', opens: 'Opens: the blue-window suite', url: '' },
-      { placeholder: true, name: 'Google Developer Group certificate', issuer: 'DevTown x Google Developer Group', year: '', type: 'Certificate', opens: 'Opens: the four-colour balcony', url: '' },
-      { placeholder: true, name: 'The Future of Full Stack Development', issuer: 'HCL', year: '', type: 'Participation', opens: 'Opens: the full-stack elevator', url: '' }
+      { placeholder: true, name: 'BE10X AI Tools Workshop', skills: ['AI tools', 'Prompting'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'BE10X', year: '', type: 'Completion', opens: 'Opens: the drawer of AI tools', url: '' },
+      { placeholder: true, name: 'SQL 70: from basics to windows', skills: ['SQL', 'Joins', 'Window functions'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown', year: '', type: 'Completion', opens: 'Opens: the filing cabinet of tables', url: '' },
+      { placeholder: true, name: 'Smart India Hackathon', skills: ['Teamwork', 'Problem solving'], learned: 'Placeholder: what your team tried to solve and what you learned.', image: '', issuer: 'Smart India Hackathon', year: '', type: 'Participation', opens: 'Opens: the all-night team room', url: '' },
+      { placeholder: true, name: '5-day bootcamp: DBMS and SQL Mastery', skills: ['DBMS', 'SQL'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown', year: '', type: 'Participation', opens: 'Opens: the vault of queries', url: '' },
+      { placeholder: true, name: 'Data Science Career Roadmap session', skills: ['Data science', 'Career planning'], learned: 'Placeholder: one sentence on what you took away.', image: '', issuer: 'Add issuer', year: '', type: 'Completion', opens: 'Opens: the map room', url: '' },
+      { placeholder: true, name: 'Microsoft student certificate', skills: ['Microsoft tools'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown x Microsoft', year: '', type: 'Certificate', opens: 'Opens: the blue-window suite', url: '' },
+      { placeholder: true, name: 'Google Developer Group certificate', skills: ['Google technologies'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown x Google Developer Group', year: '', type: 'Certificate', opens: 'Opens: the four-colour balcony', url: '' },
+      { placeholder: true, name: 'The Future of Full Stack Development', skills: ['Full stack', 'Web'], learned: 'Placeholder: one sentence on what you took away.', image: '', issuer: 'HCL', year: '', type: 'Participation', opens: 'Opens: the full-stack elevator', url: '' }
     ],
     posters: [
       { placeholder: true, title: 'Poster 1 title', event: 'Event, year', image: '' },
@@ -146,7 +147,10 @@ window.HOTEL = {
   /* the Trophy Room floor (cluster 6): words only. The keys come from staff.certificates. */
   trophy: {
     tagline: 'Every certificate is a key to somewhere.',
-    hint: 'Pick a key off its hook.',
+    hint: 'Pick a key. Each one opens a door to one certificate.',
+    goal: 'Collect all {n} keys to get the Master key. It opens the Roof.',
+    learned: 'What I took from it',
+    skillsLabel: 'Skills',
     count: 'keys on the ring',
     first: 'Choose a key to see what it opens.',
     master: 'Master key unlocked. You have collected every key.',
@@ -159,7 +163,7 @@ window.HOTEL = {
   /* the Poster Gallery floor (cluster 7): words only. The posters come from staff.posters. */
   gallery: {
     tagline: 'Seven posters, one dark room, one flashlight.',
-    hint: 'Move your pointer (or drag a finger) to light the wall.',
+    hint: 'Move your pointer (or drag a finger) to light the wall. Move to either edge to keep scrolling.',
     lightsOn: 'Lights on',
     lightsOff: 'Lights off',
     keyLabel: 'Gallery key',
@@ -185,13 +189,17 @@ window.HOTEL = {
 
   /* the Archive floor (cluster 9): notes and (future) research papers.
      Notes: add as many as you like. Research papers come from staff.research (empty for now:
-     the `ghosts` below show as empty spines until you add real ones). */
+     the `ghosts` below show as empty spines until you add real ones).
+     WHAT TO WRITE: a note is 2 or 3 plain sentences about something you learned or built: a topic
+     explained in your own words, a mistake and what fixed it, what a hackathon or course taught you.
+     Add a link (a LinkedIn post, a GitHub README or a Google Doc) in `url` if the longer version lives elsewhere. */
   archive: {
     tagline: 'Nothing here yet. Everything here soon.',
     notesShelf: 'Notes',
     notesMood: 'Written in the margins',
     papersShelf: 'Research papers',
     papersMood: 'Books still being written',
+    how: 'Short notes on things I am learning, one book each. Pull one out to read. The dashed spines are future research papers.',
     hint: 'Pull a book off the shelf to read about it.',
     ghosts: ['Paper no. 1', 'Paper no. 2', 'Paper no. 3'],
     ghostTitle: 'Not written yet',
@@ -201,10 +209,10 @@ window.HOTEL = {
     noLink: 'Link coming soon',
     keyLabel: 'Archive key',
     notes: [
-      { placeholder: true, title: 'Note title one', date: 'Month 20XX', status: 'written', tags: ['tag'], summary: 'Two plain sentences on what this note is about and why you wrote it.', url: '' },
-      { placeholder: true, title: 'Note title two', date: 'Month 20XX', status: 'draft', tags: ['tag'], summary: 'Two plain sentences on what this note is about and why you wrote it.', url: '' },
-      { placeholder: true, title: 'Note title three', date: 'Month 20XX', status: 'written', tags: ['tag'], summary: 'Two plain sentences on what this note is about and why you wrote it.', url: '' },
-      { placeholder: true, title: 'Note title four', date: 'Month 20XX', status: 'draft', tags: ['tag'], summary: 'Two plain sentences on what this note is about and why you wrote it.', url: '' }
+      { placeholder: true, title: 'What I learned at Smart India Hackathon', date: 'Month 20XX', status: 'draft', tags: ['hackathon', 'teamwork'], summary: 'Placeholder. Write 2 sentences: what problem your team picked, and one thing you learned from it.', url: '' },
+      { placeholder: true, title: 'SQL joins in my own words', date: 'Month 20XX', status: 'written', tags: ['SQL', 'DBMS'], summary: 'Placeholder. Explain a topic you studied the way you would tell a friend, in 2 to 3 sentences.', url: '' },
+      { placeholder: true, title: 'How I think about pointers in C++', date: 'Month 20XX', status: 'draft', tags: ['C++', 'DSA'], summary: 'Placeholder. A mistake you made, and what finally made it click.', url: '' },
+      { placeholder: true, title: 'Why I like front-end work', date: 'Month 20XX', status: 'written', tags: ['front-end'], summary: 'Placeholder. What you enjoy about building things people can see and touch.', url: '' }
     ]
   },
 
@@ -261,35 +269,35 @@ window.HOTEL = {
      label   : what's printed on the elevator button
      accent  : this floor's accent color */
   floors: [
-    { id: 'roof',     label: 'R', name: 'The Roof',       kicker: 'Top of the hotel',
+    { id: 'roof', tip: 'A locked surprise',     label: 'R', name: 'The Roof',       kicker: 'Top of the hotel',
       tagline: 'Locked. The view is worth the wait.',
       sign: 'Opens at graduation',           accent: '#F4E9D3' },
 
-    { id: 'archive',  label: '5', name: 'The Archive',    kicker: 'Floor 5',
+    { id: 'archive', tip: 'Notes and research papers',  label: '5', name: 'The Archive',    kicker: 'Floor 5',
       tagline: 'Nothing here yet. Everything here soon.',
       sign: 'Books still being written',     accent: '#D9C7A5' },
 
-    { id: 'gallery',  label: '4', name: 'Poster Gallery', kicker: 'Floor 4',
+    { id: 'gallery', tip: 'My 7 academic posters',  label: '4', name: 'Poster Gallery', kicker: 'Floor 4',
       tagline: 'Seven posters, one dark room, one flashlight.',
       sign: 'Hanging posters. Mind the ladder.', accent: '#F2B84B' },
 
-    { id: 'workshop', label: '3', name: 'The Workshop',   kicker: 'Floor 3',
+    { id: 'workshop', tip: 'Projects I have built', label: '3', name: 'The Workshop',   kicker: 'Floor 3',
       tagline: 'Things I build, switch by switch.',
       sign: 'Machines warming up',           accent: '#E8798A' },
 
-    { id: 'trophy',   label: '2', name: 'Trophy Room',    kicker: 'Floor 2',
+    { id: 'trophy', tip: 'Certificates, one key each',   label: '2', name: 'Trophy Room',    kicker: 'Floor 2',
       tagline: 'Every certificate is a key to somewhere.',
       sign: 'Polishing the keys',            accent: '#F5CF7A' },
 
-    { id: 'minibar',  label: '1', name: 'The Minibar',    kicker: 'Floor 1',
+    { id: 'minibar', tip: 'My skills',  label: '1', name: 'The Minibar',    kicker: 'Floor 1',
       tagline: 'Skills, chilled and ready to serve.',
       sign: 'Restocking',                    accent: '#7FD1B9' },
 
-    { id: 'lobby',    label: 'L', name: 'The Lobby',      kicker: 'Ground floor',
+    { id: 'lobby', tip: 'Start here: the front desk',    label: 'L', name: 'The Lobby',      kicker: 'Ground floor',
       tagline: 'Ring the bell. Someone will come. Probably.',
       sign: 'Foxie is at the desk',          accent: '#F2B84B' },
 
-    { id: 'basement', label: 'B', name: 'The Basement',   kicker: 'Below ground',
+    { id: 'basement', tip: 'The fun side of me', label: 'B', name: 'The Basement',   kicker: 'Below ground',
       tagline: "The part of me that isn't on the resume.",
       sign: 'Staff only (for now)',          accent: '#9AA3E0' }
   ]

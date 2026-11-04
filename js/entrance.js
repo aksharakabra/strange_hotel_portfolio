@@ -17,11 +17,7 @@
   function shouldShow(content) {
     var q = location.search;
     if (/[?&]skip\b/.test(q)) return false;
-    if (/[?&]intro\b/.test(q)) return true;
-    var id = location.hash.slice(1);
-    if (id && content.floors.some(function (f) { return f.id === id; })) return false;
-    try { if (localStorage.getItem(VISITED)) return false; } catch (e) { /* storage blocked: show it */ }
-    return true;
+    return true;   // the bell and the door open on every visit (add ?skip to the address to bypass)
   }
 
   function markup(t) {

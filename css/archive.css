@@ -56,3 +56,6 @@
   .ar-card-text { font-size: .9rem; }
 }
 @media (prefers-reduced-motion: reduce) { .ar-book, .ar-card.is-pop { transition: none !important; animation: none !important; } }
+
+.ar-how { margin: 0; max-width: 56ch; color: var(--cream-d); font: 400 .82rem/1.45 var(--font-mono); }
+@media (max-width: 520px) { .ar-how { font-size: .74rem; } }

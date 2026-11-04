@@ -1,8 +1,10 @@
-/* The Trophy Room (cluster 6): every certificate is a brass key on a hook.
-   - Pick a key: it swings out, a tag shows what it opens, and the key joins your key ring.
-   - Collect them all for a Master key.
-   Keys come from `staff.certificates` in js/content.js (shared with the Staff page).
-   Optional per certificate: type ('Completion', 'Participation'...), opens (a fun line), url. */
+/* The Trophy Room (cluster 6, reworked in cluster 13): every certificate is a key.
+   - Pick a key off its hook: it swings out and a little door opens to show that certificate
+     (a picture if you add one), what it opens, what you took from it, and its skills.
+   - Each key you pick is added to your key ring. Collect them all for the MASTER key,
+     which unlocks the peek on the Roof.
+   Keys come from `staff.certificates` in js/content.js (shared with the Staff page). Per certificate:
+   name, issuer, year, type, opens, learned, skills[], image, url. Words live under `trophy`. */
 (function () {
   'use strict';
 
@@ -67,34 +69,48 @@
     board.appendChild(ul);
     room.appendChild(board);
 
-    /* ---- tag (details) ---- */
+    /* ---- the opened door + certificate tag ---- */
     var tag = el('div', 'tr-tag');
     tag.setAttribute('aria-live', 'polite');
+    var door = el('div', 'tr-door');
+    door.setAttribute('aria-hidden', 'true');
+    var thumb = el('div', 'tr-thumb');
+    var leaf = el('div', 'tr-leaf');
+    leaf.appendChild(el('span', 'tr-leaf-n'));
+    door.appendChild(thumb); door.appendChild(leaf);
+    var info = el('div', 'tr-info');
     var tagTitle = el('h3', 'tr-tag-title');
     var tagMeta = el('p', 'tr-tag-meta');
     var tagOpens = el('p', 'tr-tag-opens');
+    var tagLearned = el('p', 'tr-tag-learned');
+    var tagSkills = el('ul', 'tr-skills');
     var tagLink = el('p', 'tr-tag-link');
+    [tagTitle, tagMeta, tagOpens, tagLearned, tagSkills, tagLink].forEach(function (n) { info.appendChild(n); });
     var ph = el('span', 'tr-ph', 'Placeholder');
     ph.hidden = true;
-    tag.appendChild(tagTitle); tag.appendChild(tagMeta); tag.appendChild(tagOpens); tag.appendChild(tagLink); tag.appendChild(ph);
+    tag.appendChild(door); tag.appendChild(info); tag.appendChild(ph);
     room.appendChild(tag);
 
     var count = el('p', 'tr-count');
     room.appendChild(count);
     section.appendChild(room);
 
+    var total = list.length;
+    var picked = {};
+    function have() { return Object.keys(picked).length; }
+    function goal() { return (T.goal || 'Collect all {n} keys for the Master key.').replace('{n}', total); }
+    function updateCount() {
+      if (!total) { count.textContent = ''; return; }
+      if (have() === total) count.textContent = T.master || 'Master key unlocked.';
+      else count.textContent = have() + ' / ' + total + ' ' + (T.count || 'keys collected') + '. ' + goal();
+    }
+
     if (!list.length) {
       tagTitle.textContent = T.empty || 'No keys yet.';
     } else {
-      tagTitle.textContent = T.first || 'Choose a key to see what it opens.';
-      tagMeta.textContent = T.hint || '';
-    }
-
-    var picked = {};
-    var total = list.length;
-    function have() { return Object.keys(picked).length; }
-    function updateCount() {
-      count.textContent = total ? have() + ' / ' + total + ' ' + (T.count || 'keys on the ring') : '';
+      tagTitle.textContent = T.hint || 'Pick a key.';
+      tagMeta.textContent = goal();
+      thumb.appendChild(el('span', 'tr-thumb-ph', '?'));
     }
     updateCount();
 
@@ -113,6 +129,13 @@
       tagTitle.textContent = c.name;
       tagMeta.textContent = [c.issuer, c.year, c.type].filter(Boolean).join(' · ');
       tagOpens.textContent = c.opens || '';
+      tagLearned.textContent = '';
+      if (c.learned) {
+        tagLearned.appendChild(el('b', null, (T.learned || 'What I took from it') + ': '));
+        tagLearned.appendChild(document.createTextNode(c.learned));
+      }
+      tagSkills.textContent = '';
+      (c.skills || []).forEach(function (s) { tagSkills.appendChild(el('li', null, s)); });
       tagLink.textContent = '';
       var url = safe(c.url);
       if (url) {
@@ -127,6 +150,20 @@
         tagLink.appendChild(el('span', 'tr-nolink', T.noLink || 'Certificate link coming soon'));
       }
       ph.hidden = !c.placeholder;
+
+      /* the door behind the key: picture or a frame, and the door swings open */
+      thumb.textContent = '';
+      var image = safe(c.image);
+      if (image) {
+        var img = el('img');
+        img.src = image; img.alt = '';
+        thumb.appendChild(img);
+      } else {
+        thumb.appendChild(el('span', 'tr-thumb-ph', T.noImage || 'Certificate picture goes here'));
+      }
+      leaf.firstChild.textContent = String(items.indexOf(it) + 1);
+      door.classList.remove('is-open'); void door.offsetWidth;
+      setTimeout(function () { door.classList.add('is-open'); }, 40);
       tag.classList.remove('is-pop'); void tag.offsetWidth; tag.classList.add('is-pop');
 
       if (!picked[it.id]) {
@@ -138,7 +175,6 @@
           if (Hotel.keys && !Hotel.keys.has('master')) Hotel.keys.add({ id: 'master', label: T.masterLabel || 'Master key', color: '#F2B84B' });
           section.classList.add('is-master');
           announce(T.master || 'Master key unlocked.');
-          count.textContent = T.master || 'Master key unlocked.';
         }
       }
     }

@@ -100,7 +100,6 @@
       onEnter: function () {
         document.body.classList.remove('is-entering');
         hotelEl.removeAttribute('inert');
-        try { localStorage.setItem('hotel.visited', '1'); } catch (e) { /* storage blocked */ }
         document.getElementById('announcer').textContent = content.entrance.welcome;
         var here = document.querySelector('.fbtn[aria-current="true"]');
         if (here) here.focus({ preventScroll: true });

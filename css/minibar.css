@@ -44,10 +44,13 @@
 .mb-door {
   position: absolute; inset: 10px; z-index: 3; display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, #F3F7F8, #D5DEE2); border-radius: 10px; border: 2px solid #B9C4C9;
-  transform-origin: left center; transition: transform .8s cubic-bezier(.5, 0, .2, 1); backface-visibility: hidden; pointer-events: none;
+  transform-origin: left center; transition: transform .8s cubic-bezier(.5, 0, .2, 1); backface-visibility: hidden; cursor: pointer; touch-action: pan-y;
 }
-.mb-fridge.is-open .mb-door { transform: rotateY(-112deg); }
+.mb-fridge.is-open .mb-door { transform: rotateY(-112deg); pointer-events: none; }
 .mb-handle { position: absolute; right: 14px; top: 28%; bottom: 28%; width: 10px; border-radius: 5px; background: #8E9BA1; }
+.mb-door { flex-direction: column; gap: 10px; }
+.mb-door-h { color: #5C6970; font: 400 .78rem var(--font-mono); }
+.mb-door:hover { background: linear-gradient(135deg, #FBFDFD, #DCE5E8); }
 .mb-door-t { color: #5C6970; font: 500 .85rem var(--font-mono); letter-spacing: .3em; }
 .mb-light { position: absolute; top: 6px; left: 50%; width: 46px; height: 5px; margin-left: -23px; border-radius: 3px; background: #8E9BA1; z-index: 4; transition: background .4s, box-shadow .4s; }
 .mb-fridge.is-open .mb-light { background: #FFF6C9; box-shadow: 0 0 14px 4px #FFF1A8; }
