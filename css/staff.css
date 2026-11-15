@@ -131,7 +131,7 @@
 .posters { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 18px; }
 .poster { margin: 0; }
 .poster a { display: block; }
-.poster img { display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.poster img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
 .poster-ph {
   display: grid; place-items: center; aspect-ratio: 3 / 4; padding: 12px; text-align: center;
   border: 2px dashed #B8AC8C; border-radius: 8px; color: var(--muted); font: 400 .85rem var(--font-mono);
