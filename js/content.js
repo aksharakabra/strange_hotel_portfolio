@@ -7,7 +7,7 @@ window.HOTEL = {
     links: {
       github: 'https://github.com/aksharakabra',
       linkedin: 'https://www.linkedin.com/in/akshara-kabra-4939a0382',
-      email: ''       // e.g. 'you@example.com'
+      email: 'aksharakabra02@gmail.com'
     }
   },
 
@@ -83,8 +83,8 @@ window.HOTEL = {
     about: {
       placeholder: true,
       text: [
-        'This is a placeholder. Write two or three plain sentences about who you are, what you study and what kind of work or internship you are looking for.'
-      ]
+        'I am a computer science student pursuing MCA (Integrated) at Devi Ahilya Vishwavidyalaya (DAVV), Indore. I am interested in software development, data structure, and AI.I have a strong foundation in programming languages such as C++, Python, and SQL, and I am constantly seeking opportunities to enhance my skills and knowledge in the field of computer science.Two random facts about me are I love drawings and I learn languages during my free time. I am working on my japanese language skills and also I learnt basic korean too'
+         ]
     },
     education: [
       { placeholder: true, degree: 'MCA (Integrated)', school: 'Devi Ahilya Vishwavidyalaya (DAVV), Indore', years: '20XX to 20XX' }
@@ -92,31 +92,31 @@ window.HOTEL = {
     /* Projects feed the Workshop AND the Staff page. Optional: status ('shipped' | 'half' | 'sketch'),
        progress (0 to 100), blurb (short teaser for the Workshop). */
     projects: [
-      { title: 'Sutairu frontend project', blurb: 'A front-end build in plain HTML and CSS.', description: 'A front-end project built with HTML and CSS. (Edit this line to say what it is and what you learned.)', tech: ['HTML', 'CSS'], code: 'https://github.com/aksharakabra/sutairu_frontend-project', live: '' },
-      { title: 'DBMS assignment (IC-2K25-06)', blurb: 'Database work, written in SQL.', description: 'Database management coursework written in SQL. (Edit this line to say what it covers.)', tech: ['SQL'], code: 'https://github.com/aksharakabra/IC-2K25-06_DBMS_AKSHARA_KABRA', live: '' },
-      { title: 'Data structures assignment (IC-2K25-06)', blurb: 'Data structures, written in C++.', description: 'Data structures coursework written in C++. (Edit this line to say what it covers.)', tech: ['C++', 'Data structures'], code: 'https://github.com/aksharakabra/IC-2K25-06_DS_AKSHARA_KABRA', live: '' }
+      { title: 'Sutairu frontend project', blurb: 'A front-end build in plain HTML and CSS.', description: 'This is my first ever frontend project. Sutairu is a way to say "style" is Japanese. This is a pinterest themed site but especially for fashion. I learnt a lot through this project like tags, pathways and how to get ideas, themes of website and much more.', tech: ['HTML', 'CSS'], code: 'https://github.com/aksharakabra/sutairu_frontend-project', live: '' },
+      { title: 'DBMS assignment (IC-2K25-06)', blurb: 'Database work, written in SQL.', description: 'This is my database management lab-work written in SQL, to be specific only mysql. I learnt a lot like queries, subqueries, functions, joins and more about database design and optimization.', tech: ['SQL'], code: 'https://github.com/aksharakabra/IC-2K25-06_DBMS_AKSHARA_KABRA', live: '' },
+      { title: 'Data structures assignment (IC-2K25-06)', blurb: 'Data structures, written in C++.', description: 'This is my data structures coursework written in C++. I learnt a lot about algorithms, complexity analysis, and implementation details.', tech: ['C++', 'Data structures'], code: 'https://github.com/aksharakabra/IC-2K25-06_DS_AKSHARA_KABRA', live: '' }
     ],
     /* Certificates feed the Trophy Room (one key each) AND the Staff page. `url` can be a LinkedIn
        link or a file in assets/ (e.g. 'assets/cert1.jpg'). `type`, `opens`, `skills`, `learned` and `image` (a picture of the certificate)
        are shown in the Trophy Room when you open a key. */
     certificates: [
-      { placeholder: true, name: 'BE10X AI Tools Workshop', skills: ['AI tools', 'Prompting'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'BE10X', year: '', type: 'Completion', opens: 'Opens: the drawer of AI tools', url: '' },
-      { placeholder: true, name: 'SQL 70: from basics to windows', skills: ['SQL', 'Joins', 'Window functions'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown', year: '', type: 'Completion', opens: 'Opens: the filing cabinet of tables', url: '' },
-      { placeholder: true, name: 'Smart India Hackathon', skills: ['Teamwork', 'Problem solving'], learned: 'Placeholder: what your team tried to solve and what you learned.', image: '', issuer: 'Smart India Hackathon', year: '', type: 'Participation', opens: 'Opens: the all-night team room', url: '' },
-      { placeholder: true, name: '5-day bootcamp: DBMS and SQL Mastery', skills: ['DBMS', 'SQL'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown', year: '', type: 'Participation', opens: 'Opens: the vault of queries', url: '' },
-      { placeholder: true, name: 'Data Science Career Roadmap session', skills: ['Data science', 'Career planning'], learned: 'Placeholder: one sentence on what you took away.', image: '', issuer: 'Add issuer', year: '', type: 'Completion', opens: 'Opens: the map room', url: '' },
-      { placeholder: true, name: 'Microsoft student certificate', skills: ['Microsoft tools'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown x Microsoft', year: '', type: 'Certificate', opens: 'Opens: the blue-window suite', url: '' },
-      { placeholder: true, name: 'Google Developer Group certificate', skills: ['Google technologies'], learned: 'Placeholder: one sentence on what you learned or built.', image: '', issuer: 'DevTown x Google Developer Group', year: '', type: 'Certificate', opens: 'Opens: the four-colour balcony', url: '' },
-      { placeholder: true, name: 'The Future of Full Stack Development', skills: ['Full stack', 'Web'], learned: 'Placeholder: one sentence on what you took away.', image: '', issuer: 'HCL', year: '', type: 'Participation', opens: 'Opens: the full-stack elevator', url: '' }
+      { placeholder: true, name: 'BE10X AI Tools Workshop', skills: ['AI tools', 'Prompting'], learned: 'learn to use of google LLMs, Claude projects, Higgsfield for video making, Julius ai and much more', image: 'images/b10x.jpg', issuer: 'BE10X', year: '', type: 'Completion', opens: 'Opens: the drawer of AI tools', url: '' },
+      { placeholder: true, name: 'SQL 70: from basics to windows', skills: ['SQL', 'Joins', 'Window functions'], learned: 'Learned advanced SQL techniques including joins and window functions. ', image: 'images/sql70.jpg', issuer: 'DevTown', year: '', type: 'Completion', opens: 'Opens: the filing cabinet of tables', url: '' },
+      { placeholder: true, name: 'Smart India Hackathon', skills: ['Teamwork', 'Problem solving'], learned: 'Participated in a national-level hackathon, enhancing teamwork and problem-solving skills and even got selected in second level. Learned about making prototype overnight too.', image: 'images/SIH.jpg', issuer: 'Smart India Hackathon', year: '', type: 'Participation', opens: 'Opens: the all-night team room', url: '' },
+      { placeholder: true, name: '5-day bootcamp: DBMS and SQL Mastery', skills: ['DBMS', 'SQL'], learned: 'Gained hands-on experience with database management and SQL query optimization.', image: 'images/sql-mastery.jpg', issuer: 'DevTown', year: '', type: 'Participation', opens: 'Opens: the vault of queries', url: '' },
+      { placeholder: true, name: 'Data Science Career Roadmap session', skills: ['Data science', 'Career planning'], learned: 'Gained insights into the career path of a data scientist and the skills required for success.', image: 'images/data-science.jpg', issuer: 'Add issuer', year: '', type: 'Completion', opens: 'Opens: the map room', url: '' },
+      { placeholder: true, name: 'Microsoft student certificate', skills: ['Microsoft tools'], learned: 'Developed proficiency in using Microsoft tools for development and productivity.', image: 'images/js-unlocked.jpg', issuer: 'DevTown x Microsoft', year: '', type: 'Certificate', opens: 'Opens: the blue-window suite', url: '' },
+      { placeholder: true, name: 'Google Developer Group certificate', skills: ['Google technologies'], learned: 'Gained experience with Google technologies and best practices.', image: 'images/js google.jpg', issuer: 'DevTown x Google Developer Group', year: '', type: 'Certificate', opens: 'Opens: the four-colour balcony', url: '' },
+      { placeholder: true, name: 'The Future of Full Stack Development', skills: ['Full stack', 'Web'], learned: 'Explored emerging trends and technologies in full stack development.', image: 'images/fullstack.jpg', issuer: 'HCL', year: '', type: 'Participation', opens: 'Opens: the full-stack elevator', url: '' }
     ],
     posters: [
-      { placeholder: true, title: 'Poster 1 title', event: 'Event, year', image: '' },
-      { placeholder: true, title: 'Poster 2 title', event: 'Event, year', image: '' },
-      { placeholder: true, title: 'Poster 3 title', event: 'Event, year', image: '' },
-      { placeholder: true, title: 'Poster 4 title', event: 'Event, year', image: '' },
-      { placeholder: true, title: 'Poster 5 title', event: 'Event, year', image: '' },
-      { placeholder: true, title: 'Poster 6 title', event: 'Event, year', image: '' },
-      { placeholder: true, title: 'Poster 7 title', event: 'Event, year', image: '' }
+      { placeholder: true, title: 'Introduction to data structure', event: 'Event, year', image: 'images/unit1.jpg' },
+      { placeholder: true, title: 'Sorting and searching algorithms', event: 'Event, year', image: 'images/unit2.jpg' },
+      { placeholder: true, title: 'Linked lists', event: 'Event, year', image: 'images/unit3.jpg' },
+      { placeholder: true, title: 'Stacks', event: 'Event, year', image: 'images/unit4.jpg' },
+      { placeholder: true, title: 'Queue', event: 'Event, year', image: 'images/unit5.jpg' },
+      { placeholder: true, title: 'Trees', event: 'Event, year', image: 'images/unit6.jpg' },
+      { placeholder: true, title: 'Graphs', event: 'Event, year', image: 'images/unit7.jpg' }
     ],
     research: [],               // none yet: the section stays hidden. Later: { title, description, url }
     /* Skills feed the Minibar (one bottle each, one shelf per group) AND the Staff page.
