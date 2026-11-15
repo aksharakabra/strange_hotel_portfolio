@@ -100,7 +100,7 @@ window.HOTEL = {
        link or a file in assets/ (e.g. 'assets/cert1.jpg'). `type`, `opens`, `skills`, `learned` and `image` (a picture of the certificate)
        are shown in the Trophy Room when you open a key. */
     certificates: [
-      { placeholder: true, name: 'BE10X AI Tools Workshop', skills: ['AI tools', 'Prompting'], learned: 'learn to use of google LLMs, Claude projects, Higgsfield for video making, Julius ai and much more', image: 'images/b10x.jpg', issuer: 'BE10X', year: '', type: 'Completion', opens: 'Opens: the drawer of AI tools', url: '' },
+      { placeholder: true, name: 'BE10X AI Tools Workshop', skills: ['AI tools', 'Prompting'], learned: 'learn to use of google LLMs, Claude projects, Higgsfield for video making, Julius ai and much more', image: 'images/b10x.jpg', issuer: 'BE10X', year: '', type: 'Completion', opens: 'Opens: the freedom of frelancing', url: '' },
       { placeholder: true, name: 'SQL 70: from basics to windows', skills: ['SQL', 'Joins', 'Window functions'], learned: 'Learned advanced SQL techniques including joins and window functions. ', image: 'images/sql70.jpg', issuer: 'DevTown', year: '', type: 'Completion', opens: 'Opens: the filing cabinet of tables', url: '' },
       { placeholder: true, name: 'Smart India Hackathon', skills: ['Teamwork', 'Problem solving'], learned: 'Participated in a national-level hackathon, enhancing teamwork and problem-solving skills and even got selected in second level. Learned about making prototype overnight too.', image: 'images/SIH.jpg', issuer: 'Smart India Hackathon', year: '', type: 'Participation', opens: 'Opens: the all-night team room', url: '' },
       { placeholder: true, name: '5-day bootcamp: DBMS and SQL Mastery', skills: ['DBMS', 'SQL'], learned: 'Gained hands-on experience with database management and SQL query optimization.', image: 'images/sql-mastery.jpg', issuer: 'DevTown', year: '', type: 'Participation', opens: 'Opens: the vault of queries', url: '' },
@@ -209,10 +209,10 @@ window.HOTEL = {
     noLink: 'Link coming soon',
     keyLabel: 'Archive key',
     notes: [
-      { placeholder: true, title: 'What I learned at Smart India Hackathon', date: 'Month 20XX', status: 'draft', tags: ['hackathon', 'teamwork'], summary: 'Placeholder. Write 2 sentences: what problem your team picked, and one thing you learned from it.', url: '' },
-      { placeholder: true, title: 'SQL joins in my own words', date: 'Month 20XX', status: 'written', tags: ['SQL', 'DBMS'], summary: 'Placeholder. Explain a topic you studied the way you would tell a friend, in 2 to 3 sentences.', url: '' },
-      { placeholder: true, title: 'How I think about pointers in C++', date: 'Month 20XX', status: 'draft', tags: ['C++', 'DSA'], summary: 'Placeholder. A mistake you made, and what finally made it click.', url: '' },
-      { placeholder: true, title: 'Why I like front-end work', date: 'Month 20XX', status: 'written', tags: ['front-end'], summary: 'Placeholder. What you enjoy about building things people can see and touch.', url: '' }
+      { placeholder: true, title: 'What I learned at Smart India Hackathon', date: 'Month 20XX', status: 'draft', tags: ['hackathon', 'teamwork'], summary: 'Our team made a software SuDisha to help people in any disaster situation. I learnt about replit, espo go, lovable, SIH buddy and more, i learnt about prototypes, presentation, tackling stage fear and giving presentations and more.', url: '' },
+      { placeholder: true, title: 'SQL joins experience', date: 'Month 20XX', status: 'written', tags: ['SQL', 'DBMS'], summary: 'I read the theory and thought it was hell of difficult but when i did the queries in my sql it was the easiest', url: '' },
+      { placeholder: true, title: 'Why I like front-end work', date: 'Month 20XX', status: 'written', tags: ['front-end'], summary: 'I am a creative person who enjoys building things that people can see and interact with and front end made it possible all thanks to my teacher ragini mam and anshul sir, they helped me take interest with html to all the way in front end.', url: '' },
+      { placeholder: true, title: 'One person i am most thankful for', date: 'Month 20XX', status: 'draft', tags: ['C++', 'DSA'], summary: 'My DSA teacher DR. Shaligram prajapat, he helped me a lot in thinking beyond the four walls of college.', url: '' }
     ]
   },
 
@@ -228,8 +228,8 @@ window.HOTEL = {
     peekTitle: 'A peek at the roof',
     letterTitle: 'Dear future me,',
     letter: [
-      'Placeholder: write a short, kind note to yourself here.',
-      'Where you hope to be, and what you want to still be curious about.'
+      'Dear future me,',
+      'I hope you are happy and successful and hope you are not regreting any missing opportunities. I hope you are still learning and exploring new things. I hope you are still travelling and enjoying the nature. I hope you are still coding and building new things. I hope you are still reading books and learning new languages. I hope you are still enjoying the little things in life and not taking anything for granted.'
     ],
     sign: '(signed) Akshara, from the third floor of the hotel',
     star: 'You caught a shooting star. Make a wish.',
@@ -242,12 +242,12 @@ window.HOTEL = {
     hint: 'Pull the string for light. Open a box.',
     pull: 'Pull the light string',
     boxes: [
-      { placeholder: true, label: 'Favourites', text: 'Placeholder: your favourite food, song, show or place.' },
-      { placeholder: true, label: 'Currently learning', text: 'Placeholder: Japanese, DSA, something new this month.' },
-      { placeholder: true, label: 'Comfort things', text: 'Placeholder: what you reach for on a hard day.' },
-      { placeholder: true, label: 'Weird fact', text: 'Placeholder: a small funny fact about you.' },
-      { placeholder: true, label: 'Dream', text: 'Placeholder: one big thing you want to do.' },
-      { placeholder: true, label: 'Foxie says', text: 'Placeholder: a line from Foxie about you.' }
+      { placeholder: true, label: 'Favourites', text: 'food: dal-chawal-kadhi, place: the forests of south india, book: the subtle art of not giving a fuck, genre: horror or bl' },
+      { placeholder: true, label: 'Currently learning', text: 'Japanese, korean, DSA, whimsical vibecoding' },
+      { placeholder: true, label: 'Comfort things', text: 'learning new language, kadhi-chawal, sunsets, walking on beach at night, travelling through the nature, reading book in the noncrowded train, hindi literature and poetry' },
+      { placeholder: true, label: 'Weird fact', text: 'I have an itch to learn any random useless skills like i know morse code, i can throw cards like knifes, i learned basic intro in six languages, i can do a split and much more. Also my music taste is weird...' },
+      { placeholder: true, label: 'Dream', text: 'work in a big company in a different country and buy a house, car for family' },
+      { placeholder: true, label: 'Foxie says', text: 'foxie says you are awesome! Have a good day!' }
     ],
     keyLabel: 'Basement key'
   },

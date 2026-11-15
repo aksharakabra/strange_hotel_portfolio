@@ -73,9 +73,9 @@
     var tag = el('div', 'tr-tag');
     tag.setAttribute('aria-live', 'polite');
     var door = el('div', 'tr-door');
-    door.setAttribute('aria-hidden', 'true');
     var thumb = el('div', 'tr-thumb');
     var leaf = el('div', 'tr-leaf');
+    leaf.setAttribute('aria-hidden', 'true');
     leaf.appendChild(el('span', 'tr-leaf-n'));
     door.appendChild(thumb); door.appendChild(leaf);
     var info = el('div', 'tr-info');
@@ -94,6 +94,34 @@
     var count = el('p', 'tr-count');
     room.appendChild(count);
     section.appendChild(room);
+
+    /* ---- big view of a certificate (native dialog, outside the elevator) ---- */
+    var dlg = el('dialog', 'tr-dialog');
+    dlg.setAttribute('aria-labelledby', 'tr-d-title');
+    var dTitle = el('h3', 'tr-d-title'); dTitle.id = 'tr-d-title';
+    var dImg = el('img', 'tr-d-img');
+    dImg.alt = '';
+    var dBar = el('div', 'tr-d-bar');
+    var dClose = el('button', 'tr-d-btn tr-d-close', T.close || 'Close');
+    dClose.type = 'button';
+   dBar.appendChild(dClose);
+    dlg.appendChild(dTitle); dlg.appendChild(dImg); dlg.appendChild(dBar);
+    document.body.appendChild(dlg);
+    var opener = null;
+    function openBig(c, image, from) {
+      if (typeof dlg.showModal !== 'function') { window.open(image, '_blank', 'noopener'); return; }
+      opener = from;
+      dTitle.textContent = c.name;
+      dImg.src = image;
+      dImg.alt = 'Certificate: ' + c.name;
+      dlg.showModal();
+      dClose.focus();
+    }
+    dClose.addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', function () { if (opener) { try { opener.focus(); } catch (e) {} } });
+    dlg.addEventListener('keydown', function (e) { e.stopPropagation(); });   // keep the elevator's keys out
+    document.addEventListener('hotel:depart', function () { if (dlg.open) dlg.close(); });
 
     var total = list.length;
     var picked = {};
@@ -155,9 +183,16 @@
       thumb.textContent = '';
       var image = safe(c.image);
       if (image) {
+        var zoom = el('button', 'tr-zoom');
+        zoom.type = 'button';
+        zoom.setAttribute('aria-haspopup', 'dialog');
+        zoom.setAttribute('aria-label', (T.enlarge || 'Enlarge certificate') + ': ' + c.name);
         var img = el('img');
         img.src = image; img.alt = '';
-        thumb.appendChild(img);
+        zoom.appendChild(img);
+        zoom.appendChild(el('span', 'tr-zoom-tip', T.enlargeTip || 'Click to enlarge'));
+        zoom.addEventListener('click', function () { openBig(c, image, zoom); });
+        thumb.appendChild(zoom);
       } else {
         thumb.appendChild(el('span', 'tr-thumb-ph', T.noImage || 'Certificate picture goes here'));
       }
