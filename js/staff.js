@@ -361,7 +361,7 @@
     main.appendChild(head);
 
     var view = el('div', 'block');
-    if (pdf) {
+     if (pdf && !image) {
       var obj = el('object', 'cv-frame');
       obj.data = pdf;
       obj.type = 'application/pdf';
