@@ -64,6 +64,7 @@ window.HOTEL = {
       'Fun fact: this hotel has no 13th floor. It has no 6th floor either. Yet.'
     ],
     baby: 'Shh! The little one is sleeping.',
+    lamp: ['Careful! That bulb is shy.', 'Flicker flicker. Very dramatic.', 'The electrician says please stop. (There is no electrician.)'],
     back: ['Back already? Welcome back!', 'The coffee is still warm.', 'Find what you were looking for?']
   },
 
@@ -78,10 +79,9 @@ window.HOTEL = {
     photo: 'images/akshara.jpg',        
     cv: {
       pdf: 'images/cv.pdf',                 
-      image: 'images/Akshara_Kabra_CV (2)_page-0001.jpg'                 
+      image: 'images/cv.jpg'                 
     },
     about: {
-      placeholder: true,
       text: [
         'I am a computer science student pursuing MCA (Integrated) at Devi Ahilya Vishwavidyalaya (DAVV), Indore. I am interested in software development, data structure, and AI.I have a strong foundation in programming languages such as C++, Python, and SQL, and I am constantly seeking opportunities to enhance my skills and knowledge in the field of computer science.Two random facts about me are I love drawings and I learn languages during my free time. I am working on my japanese language skills and also I learnt basic korean too'
       ]
@@ -100,14 +100,14 @@ window.HOTEL = {
        link or a file in assets/ (e.g. 'assets/cert1.jpg'). `type`, `opens`, `skills`, `learned` and `image` (a picture of the certificate)
        are shown in the Trophy Room when you open a key. */
     certificates: [
-      { name: 'BE10X AI Tools Workshop', skills: ['AI tools', 'Prompting'], learned: 'learn to use of google LLMs, Claude projects, Higgsfield for video making, Julius ai and much more', image: 'images/b10x.jpg', issuer: 'BE10X', year: '2026', type: 'Completion', opens: 'Opens: the freedom of frelancing', url: '' },
-      { name: 'SQL 70: from basics to windows', skills: ['SQL', 'Joins', 'Window functions'], learned: 'Learned advanced SQL techniques including joins and window functions. ', image: 'images/sql70.jpg', issuer: 'DevTown', year: '2026', type: 'Completion', opens: 'Opens: the filing cabinet of tables', url: '' },
-      { name: 'Smart India Hackathon', skills: ['Teamwork', 'Problem solving'], learned: 'Participated in a national-level hackathon, enhancing teamwork and problem-solving skills and even got selected in second level. Learned about making prototype overnight too.', image: 'images/SIH.jpg', issuer: 'Smart India Hackathon', year: '2026', type: 'Participation', opens: 'Opens: the all-night team room', url: '' },
-      { name: '5-day bootcamp: DBMS and SQL Mastery', skills: ['DBMS', 'SQL'], learned: 'Gained hands-on experience with database management and SQL query optimization.', image: 'images/sql-mastery.jpg', issuer: 'DevTown', year: '2026', type: 'Participation', opens: 'Opens: the vault of queries', url: '' },
-      { name: 'Data Science Career Roadmap session', skills: ['Data science', 'Career planning'], learned: 'Gained insights into the career path of a data scientist and the skills required for success.', image: 'images/data-science.jpg', issuer: 'Skillected', year: '2026', type: 'Completion', opens: 'Opens: the map room', url: '' },
-      { name: 'Microsoft student certificate', skills: ['Microsoft tools'], learned: 'Developed proficiency in using Microsoft tools for development and productivity.', image: 'images/js-unlocked.jpg', issuer: 'DevTown x Microsoft', year: '2026', type: 'Certificate', opens: 'Opens: the blue-window suite', url: '' },
-      { name: 'Google Developer Group certificate', skills: ['Google technologies'], learned: 'Gained experience with Google technologies and best practices.', image: 'images/js google.jpg', issuer: 'DevTown x Google Developer Group', year: '2026', type: 'Certificate', opens: 'Opens: the four-colour balcony', url: '' },
-      { name: 'The Future of Full Stack Development', skills: ['Full stack', 'Web'], learned: 'Explored emerging trends and technologies in full stack development.', image: 'images/fullstack.jpg', issuer: 'HCL', year: '2026', type: 'Participation', opens: 'Opens: the full-stack elevator', url: '' }
+      { name: 'BE10X AI Tools Workshop', skills: ['AI tools', 'Prompting'], learned: 'learn to use of google LLMs, Claude projects, Higgsfield for video making, Julius ai and much more', image: 'images/b10x.jpg', issuer: 'BE10X', year: '2026', type: 'Completion', opens: 'Opens: the freedom of frelancing' },
+      { name: 'SQL 70: from basics to windows', skills: ['SQL', 'Joins', 'Window functions'], learned: 'Learned advanced SQL techniques including joins and window functions. ', image: 'images/sql70.jpg', issuer: 'DevTown', year: '2026', type: 'Completion', opens: 'Opens: the filing cabinet of tables' },
+      { name: 'Smart India Hackathon', skills: ['Teamwork', 'Problem solving'], learned: 'Participated in a national-level hackathon, enhancing teamwork and problem-solving skills and even got selected in second level. Learned about making prototype overnight too.', image: 'images/SIH.jpg', issuer: 'Smart India Hackathon', year: '2026', type: 'Participation', opens: 'Opens: the all-night team room' },
+      { name: '5-day bootcamp: DBMS and SQL Mastery', skills: ['DBMS', 'SQL'], learned: 'Gained hands-on experience with database management and SQL query optimization.', image: 'images/sql-mastery.jpg', issuer: 'DevTown', year: '2026', type: 'Participation', opens: 'Opens: the vault of queries' },
+      { name: 'Data Science Career Roadmap session', skills: ['Data science', 'Career planning'], learned: 'Gained insights into the career path of a data scientist and the skills required for success.', image: 'images/data-science.jpg', issuer: 'Skillected', year: '2026', type: 'Completion', opens: 'Opens: the map room' },
+      { name: 'Microsoft student certificate', skills: ['Microsoft tools'], learned: 'Developed proficiency in using Microsoft tools for development and productivity.', image: 'images/js-unlocked.jpg', issuer: 'DevTown x Microsoft', year: '2026', type: 'Certificate', opens: 'Opens: the blue-window suite'},
+      { name: 'Google Developer Group certificate', skills: ['Google technologies'], learned: 'Gained experience with Google technologies and best practices.', image: 'images/js-google.jpg', issuer: 'DevTown x Google Developer Group', year: '2026', type: 'Certificate', opens: 'Opens: the four-colour balcony' },
+      { name: 'The Future of Full Stack Development', skills: ['Full stack', 'Web'], learned: 'Explored emerging trends and technologies in full stack development.', image: 'images/fullstack.jpg', issuer: 'HCL', year: '2026', type: 'Participation', opens: 'Opens: the full-stack elevator' }
     ],
     posters: [
       { title: 'Introduction to data structure', event: '2026', image: 'images/unit1.jpg' },

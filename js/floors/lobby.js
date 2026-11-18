@@ -99,11 +99,17 @@
 <g font-family="DM Mono, monospace" font-size="10.5" font-weight="500" letter-spacing="1" fill="#12162B" text-anchor="middle">${banner}</g>
 <path d="M456 192L466 174L476 192Z" fill="#3A4285"/><circle cx="478" cy="180" r="3.4" fill="#E58BAA"/>
 
-<!-- pendant lamp -->
-<path d="M568 -3000V78" stroke="#F2B84B" stroke-width="2"/>
-<path d="M548 98a20 20 0 0 1 40 0Z" fill="#F2B84B"/>
-<circle cx="568" cy="100" r="5" fill="#FFE3A0"/>
-<polygon points="556,100 580,100 616,230 520,230" fill="#F2B84B" opacity=".08"/>
+<!-- pendant lamp (tap it: it flickers and swings) -->
+<g class="hit" data-act="lamp" role="button" tabindex="0" aria-label="Flick the lamp">
+  <rect class="focus-ring" x="538" y="60" width="60" height="86" rx="10"/>
+  <rect x="538" y="60" width="60" height="86" fill="transparent"/>
+  <g class="lb-lamp">
+    <path d="M568 -3000V78" stroke="#F2B84B" stroke-width="2"/>
+    <path d="M548 98a20 20 0 0 1 40 0Z" fill="#F2B84B"/>
+    <circle class="lb-bulb" cx="568" cy="100" r="5" fill="#FFE3A0"/>
+    <polygon class="lb-cone" points="556,100 580,100 616,230 520,230" fill="#F2B84B" opacity=".08"/>
+  </g>
+</g>
 
 <!-- plants -->
 <g id="lb-plant">
@@ -417,6 +423,20 @@ ${books}
       if (name === 'bell') ring();
       else if (name === 'foxie') talk();
       else if (name === 'baby') { flag('perk', 900); run([{ text: L.baby }]); }
+      else if (name === 'lamp') flick();
+    }
+
+    /* tap the lamp: it flickers and swings; every third tap Foxie says something (lobby.lamp) */
+    var lampTaps = 0;
+    function flick() {
+      svg.classList.remove('flicker');
+      void svg.getBoundingClientRect();          // restart the animation on every tap
+      flag('flicker', 1200);
+      lampTaps++;
+      var lines = L.lamp || [];
+      if (lines.length && lampTaps % 3 === 0) {
+        run([{ text: lines[(lampTaps / 3 - 1) % lines.length] }]);
+      }
     }
 
     function greet(fromEntrance) {

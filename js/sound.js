@@ -20,6 +20,7 @@
   /* [selector, which sound]. 'pop' and 'flip' are chosen below. */
   var ON_CLICK = [
     ['.fbtn', 'click'],
+    ['.hit[data-act="lamp"]', 'thunk'],
     ['.ws-switch, .ws-lever, .mb-toggle, .gl-lights', 'thunk'],
     ['.mb-bottle', 'bottle'],
     ['.ar-book, .gl-poster', 'flip'],
