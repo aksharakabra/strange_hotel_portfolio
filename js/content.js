@@ -53,6 +53,7 @@ window.HOTEL = {
       { label: 'Posters', floor: 'gallery', say: 'The Poster Gallery, floor 4. Bring a flashlight.' },
       { label: 'Skills', floor: 'minibar', say: 'The Minibar, floor 1. Everything is served chilled.' },
       { label: 'Research', floor: 'archive', say: 'The Archive, floor 5. Mostly empty. For now.' },
+      { label: 'The wall list', board: true, say: 'Oh, that. It is just a to-do list. Nothing suspicious at all.' },
       { label: 'Just looking', floor: null, say: 'Take the elevator on the right. The buttons are labelled. Mostly.' }
     ],
     idle: [                          // when you click Foxie
@@ -65,6 +66,32 @@ window.HOTEL = {
     ],
     baby: 'Shh! The little one is sleeping.',
     lamp: ['Careful! That bulb is shy.', 'Flicker flicker. Very dramatic.', 'The electrician says please stop. (There is no electrician.)'],
+    clock: {                         // Foxie reads the wall clock ({time} is the visitor's own time)
+      morning: 'It is {time}. Coffee o\'clock. (It is always coffee o\'clock.)',
+      afternoon: 'It is {time}. Lunch is over. Dinner is a rumour.',
+      evening: 'It is {time}. The sun is clocking out. You should too. Almost.',
+      night: 'It is {time}. Why are you awake? Same, honestly.'
+    },
+    board: {                         // the wall to-do list; every real line is a hint for a secret
+      aria: 'Read the to-do list on the wall',
+      title: 'TO DO',
+      sub: 'Front desk. Do not read. (Read.)',
+      close: 'Close',
+      foot: 'P.S. Not everything is on this list.',
+      items: [
+        { text: 'Buy soap.', done: true },
+        { text: 'Say hi to Foxie. Properly. With the keyboard.', key: 'secret-foxie' },
+        { text: 'Teach Foxie to whistle.' },
+        { text: 'Plan the big trip. Type the country. (Pack sakura.)', key: 'secret-japan' },
+        { text: 'Fuel the hotel. Type what keeps it running.', key: 'secret-coffee' },
+        { text: 'Do NOT wake the little one.' },
+        { text: 'Ask the manager for a raise. Knock on the HOTEL sign. Five polite knocks.', key: 'secret-manager' },
+        { text: 'Call the electrician. (There is no electrician.)', done: true },
+        { text: 'Flick the lamp. Gently. Three times for a surprise.' },
+        { text: 'Learn the elevator\'s secret language (L, R, B and the numbers).' },
+        { text: 'Collect every shiny key. The roof is waiting.', key: 'master' }
+      ]
+    },
     back: ['Back already? Welcome back!', 'The coffee is still warm.', 'Find what you were looking for?']
   },
 

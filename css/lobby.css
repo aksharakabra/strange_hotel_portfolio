@@ -123,3 +123,20 @@
 @keyframes lb-flicker { 0%, 100% { filter: brightness(1); } 12% { filter: brightness(.72); } 24% { filter: brightness(1); } 46% { filter: brightness(.78); } 58% { filter: brightness(1); } 80% { filter: brightness(.9); } }
 @keyframes lb-bulb { 0%, 100% { fill: #FFE3A0; } 12% { fill: #6B5A3A; } 24% { fill: #FFE3A0; } 46% { fill: #8A7547; } 58% { fill: #FFF6D0; } }
 @keyframes lb-cone { 0%, 100% { opacity: .08; } 12% { opacity: .01; } 24% { opacity: .16; } 46% { opacity: .02; } 58% { opacity: .2; } 80% { opacity: .1; } }
+
+/* wall clock hands + the to-do board dialog */
+.lb-hand-h, .lb-hand-m { transform-box: view-box; }
+.lb-dialog { padding: 20px 22px 16px; border: 3px solid #C9A27A; border-radius: 14px; background: #F4E9D3; color: #12162B; width: min(460px, calc(100vw - 20px)); max-height: calc(100dvh - 20px); overflow: auto; }
+.lb-dialog::backdrop { background: rgba(6, 8, 20, .85); }
+.lb-d-title { margin: 0; font: 500 2.2rem/1 var(--font-hand); letter-spacing: .06em; text-align: center; }
+.lb-d-sub { margin: 2px 0 14px; text-align: center; color: #464C69; font: 400 .78rem var(--font-mono); }
+.lb-todo { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.lb-todo-item { display: flex; align-items: flex-start; gap: 10px; font: 500 1.35rem/1.15 var(--font-hand); }
+.lb-box { flex: none; position: relative; width: 18px; height: 18px; margin-top: 3px; border: 2px solid #12162B; border-radius: 3px; }
+.is-done .lb-box::after { content: ""; position: absolute; left: 3px; top: -3px; width: 6px; height: 12px; border: solid #B3263E; border-width: 0 3px 3px 0; transform: rotate(40deg); }
+.is-done .lb-todo-text { text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #B3263E; opacity: .7; }
+.lb-d-foot { margin: 14px 0 0; text-align: center; font: 400 .74rem var(--font-mono); color: #464C69; }
+.lb-d-bar { display: flex; justify-content: center; margin-top: 14px; }
+.lb-d-close { min-height: 44px; padding: 0 20px; border: 2px solid #12162B; border-radius: 999px; background: transparent; color: #12162B; font: 500 .85rem var(--font-mono); cursor: pointer; }
+.lb-d-close:hover { background: #12162B; color: #F4E9D3; }
+.lb-d-close:focus-visible { outline: 3px solid #B3263E; outline-offset: 3px; }

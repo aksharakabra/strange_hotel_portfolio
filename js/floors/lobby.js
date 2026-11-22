@@ -90,6 +90,34 @@
 <path d="M196 90V214M156 160H236" stroke="#F2B84B" stroke-width="3"/>
 <rect x="138" y="214" width="116" height="9" rx="3" fill="#F2B84B"/>
 
+<!-- wall clock: shows the visitor's real time (tap it) -->
+<g class="hit" data-act="clock" role="button" tabindex="0" aria-label="Wall clock">
+  <rect class="focus-ring" x="170" y="22" width="52" height="52" rx="10"/>
+  <rect x="170" y="22" width="52" height="52" fill="transparent"/>
+  <circle cx="196" cy="48" r="19" fill="#F4E9D3" stroke="#F2B84B" stroke-width="3.5"/>
+  <g stroke="#12162B" stroke-width="1.6" stroke-linecap="round"><path d="M196 32.5v3M196 60.5v3M180.5 48h3M208.5 48h3"/></g>
+  <line class="lb-hand-h" x1="196" y1="48" x2="196" y2="40" stroke="#12162B" stroke-width="2.8" stroke-linecap="round"/>
+  <line class="lb-hand-m" x1="196" y1="48" x2="196" y2="35" stroke="#B3263E" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="196" cy="48" r="2.2" fill="#12162B"/>
+</g>
+
+<!-- the to-do board (tap it: the front desk's list) -->
+<g class="hit" data-act="board" role="button" tabindex="0" aria-label="${esc((L.board && L.board.aria) || 'Read the to-do list on the wall')}">
+  <rect class="focus-ring" x="16" y="80" width="108" height="134" rx="10"/>
+  <rect x="16" y="80" width="108" height="134" fill="transparent"/>
+  <rect x="26" y="92" width="88" height="116" rx="6" fill="#C9A27A"/>
+  <rect x="33" y="108" width="74" height="93" rx="2" fill="#F4E9D3"/>
+  <rect x="54" y="86" width="32" height="14" rx="4" fill="#B3263E"/><rect x="62" y="82" width="16" height="8" rx="3" fill="#F2B84B"/>
+  <text x="70" y="123" text-anchor="middle" font-family="Caveat, cursive" font-size="15" font-weight="500" fill="#12162B">TO DO</text>
+  <g fill="none" stroke="#12162B" stroke-width="1.2">
+    <rect x="39" y="132" width="7" height="7"/><rect x="39" y="148" width="7" height="7"/><rect x="39" y="164" width="7" height="7"/><rect x="39" y="180" width="7" height="7"/>
+  </g>
+  <g fill="#12162B" opacity=".55">
+    <rect x="51" y="134" width="46" height="2.4" rx="1"/><rect x="51" y="150" width="38" height="2.4" rx="1"/><rect x="51" y="166" width="50" height="2.4" rx="1"/><rect x="51" y="182" width="32" height="2.4" rx="1"/>
+  </g>
+  <path d="M40 135l2 2.4l4.5-6M40 151l2 2.4l4.5-6" fill="none" stroke="#B3263E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+
 <!-- hanging banner -->
 <path d="M442 62L466 34L490 62" fill="none" stroke="#D9C7A5" stroke-width="2"/>
 <circle cx="466" cy="34" r="3" fill="#F2B84B"/>
@@ -268,12 +296,57 @@ ${books}
 
     function isHere() { return !!(Hotel.elevator && Hotel.elevator.current().id === floor.id); }
 
-    /* the window follows the visitor's clock */
+    /* the window follows the visitor's clock, smoothly: colours are blended between these hours
+       [hour, sky top, sky bottom, stars, moon, sun, sun height, mountain] */
+    var NIGHT = [[10, 13, 30], [27, 32, 64]];
+    var STOPS = [
+      [0,    NIGHT[0], NIGHT[1], 1, 1, 0, 60, [18, 22, 43]],
+      [5,    NIGHT[0], NIGHT[1], 1, 1, 0, 60, [18, 22, 43]],
+      [6.5,  [75, 92, 168], [247, 181, 138], .2, 0, 1, 34, [43, 49, 96]],
+      [9,    [106, 139, 200], [249, 217, 168], 0, 0, 1, 0, [58, 66, 133]],
+      [13,   [127, 178, 217], [214, 234, 240], 0, 0, 1, -30, [58, 66, 133]],
+      [16.5, [127, 178, 217], [214, 234, 240], 0, 0, 1, -12, [58, 66, 133]],
+      [18.5, [59, 31, 74], [232, 80, 58], .45, 0, 1, 42, [36, 19, 53]],
+      [20,   [29, 21, 54], [90, 42, 85], .8, .5, 0, 60, [24, 16, 41]],
+      [21.5, NIGHT[0], NIGHT[1], 1, 1, 0, 60, [18, 22, 43]],
+      [24,   NIGHT[0], NIGHT[1], 1, 1, 0, 60, [18, 22, 43]]
+    ];
+    function mix(a, b, t) {
+      if (typeof a === 'number') return a + (b - a) * t;
+      return a.map(function (v, i) { return v + (b[i] - v) * t; });
+    }
+    function rgb(c) { return 'rgb(' + c.map(Math.round).join(',') + ')'; }
+    function skyAt(h) {
+      var i = 0;
+      while (i < STOPS.length - 2 && h >= STOPS[i + 1][0]) i++;
+      var a = STOPS[i], b = STOPS[i + 1];
+      var t = Math.max(0, Math.min(1, (h - a[0]) / (b[0] - a[0])));
+      return [1, 2, 3, 4, 5, 6, 7].map(function (k) { return mix(a[k], b[k], t); });
+    }
+    function timeLabel(d) {
+      try { return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); }
+      catch (e) { return d.getHours() + ':' + ('0' + d.getMinutes()).slice(-2); }
+    }
     function applyTime() {
-      var p = period(new Date().getHours());
+      var d = new Date();
+      var h = d.getHours(), m = d.getMinutes();
+      var p = period(h);
       ['morning', 'afternoon', 'evening', 'night'].forEach(function (n) {
         section.classList.toggle('t-' + n, n === p);
       });
+      var k = skyAt(h + m / 60), st = section.style;
+      st.setProperty('--sky-a', rgb(k[0]));
+      st.setProperty('--sky-b', rgb(k[1]));
+      st.setProperty('--stars', k[2].toFixed(2));
+      st.setProperty('--moon', k[3].toFixed(2));
+      st.setProperty('--sun', k[4].toFixed(2));
+      st.setProperty('--sun-y', Math.round(k[5]) + 'px');
+      st.setProperty('--fuji', rgb(k[6]));
+      var hh = svg.querySelector('.lb-hand-h'), mm = svg.querySelector('.lb-hand-m');
+      if (hh) hh.setAttribute('transform', 'rotate(' + (((h % 12) + m / 60) * 30).toFixed(1) + ' 196 48)');
+      if (mm) mm.setAttribute('transform', 'rotate(' + (m * 6) + ' 196 48)');
+      var ck = svg.querySelector('[data-act="clock"]');
+      if (ck) ck.setAttribute('aria-label', 'Wall clock: ' + timeLabel(d));
       return p;
     }
 
@@ -387,8 +460,11 @@ ${books}
       flag('is-happy', 1400);
       run([{
         text: c.say,
-        wait: c.floor ? 900 : 0,
-        after: function () { if (c.floor && Hotel.elevator) Hotel.elevator.goToId(c.floor); }
+        wait: (c.floor || c.board) ? 900 : 0,
+        after: function () {
+          if (c.board) openBoard(null);
+          else if (c.floor && Hotel.elevator) Hotel.elevator.goToId(c.floor);
+        }
       }]);
     }
 
@@ -419,11 +495,59 @@ ${books}
       run([{ text: idle[idleN++ % idle.length] }]);
     }
 
-    function act(name) {
+    /* ----- the to-do board: a funny list that is really a list of hints ----- */
+    var B = L.board || { items: [] };
+    var bdlg = document.createElement('dialog');
+    bdlg.className = 'lb-dialog';
+    bdlg.setAttribute('aria-labelledby', 'lb-board-title');
+    bdlg.innerHTML =
+      '<h3 id="lb-board-title" class="lb-d-title">' + esc(B.title || 'TO DO') + '</h3>' +
+      (B.sub ? '<p class="lb-d-sub">' + esc(B.sub) + '</p>' : '') +
+      '<ul class="lb-todo"></ul>' +
+      (B.foot ? '<p class="lb-d-foot">' + esc(B.foot) + '</p>' : '') +
+      '<div class="lb-d-bar"><button type="button" class="lb-d-close">' + esc(B.close || 'Close') + '</button></div>';
+    document.body.appendChild(bdlg);
+    var todoEl = bdlg.querySelector('.lb-todo');
+    var boardOpener = null;
+    function drawBoard() {
+      todoEl.innerHTML = '';
+      (B.items || []).forEach(function (it) {
+        var done = !!it.done || !!(it.key && Hotel.keys && Hotel.keys.has(it.key));
+        var li = document.createElement('li');
+        li.className = 'lb-todo-item' + (done ? ' is-done' : '');
+        li.innerHTML = '<span class="lb-box" aria-hidden="true"></span><span class="lb-todo-text">' + esc(it.text) + '</span>' +
+          '<span class="sr-only">' + (done ? ' (done)' : ' (not done)') + '</span>';
+        todoEl.appendChild(li);
+      });
+    }
+    function openBoard(from) {
+      if (typeof bdlg.showModal !== 'function') { run([{ text: (B.items && B.items[0] && B.items[0].text) || '' }]); return; }
+      boardOpener = from || null;
+      drawBoard();
+      bdlg.showModal();
+      bdlg.querySelector('.lb-d-close').focus();
+    }
+    bdlg.querySelector('.lb-d-close').addEventListener('click', function () { bdlg.close(); });
+    bdlg.addEventListener('click', function (e) { if (e.target === bdlg) bdlg.close(); });
+    bdlg.addEventListener('close', function () { if (boardOpener) { try { boardOpener.focus(); } catch (e) {} } });
+    bdlg.addEventListener('keydown', function (e) { e.stopPropagation(); });   // keep the elevator's keys out
+    document.addEventListener('hotel:depart', function () { if (bdlg.open) bdlg.close(); });
+
+    function clockSay() {
+      var p = period(new Date().getHours());
+      var C = L.clock || {};
+      var line = (C[p] || 'It is {time}.').replace('{time}', timeLabel(new Date()));
+      flag('perk', 900);
+      run([{ text: line }]);
+    }
+
+    function act(name, from) {
       if (name === 'bell') ring();
       else if (name === 'foxie') talk();
       else if (name === 'baby') { flag('perk', 900); run([{ text: L.baby }]); }
       else if (name === 'lamp') flick();
+      else if (name === 'clock') clockSay();
+      else if (name === 'board') openBoard(from);
     }
 
     /* tap the lamp: it flickers and swings; every third tap Foxie says something (lobby.lamp) */
@@ -469,14 +593,14 @@ ${books}
     /* ----- input ----- */
     section.addEventListener('click', function (e) {
       var t = e.target.closest && e.target.closest('[data-act]');
-      if (t) act(t.getAttribute('data-act'));
+      if (t) act(t.getAttribute('data-act'), t);
     });
     section.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter' && e.key !== ' ') return;
       var t = e.target.closest && e.target.closest('[data-act]');
       if (!t) return;
       e.preventDefault();
-      act(t.getAttribute('data-act'));
+      act(t.getAttribute('data-act'), t);
     });
     window.addEventListener('resize', function () { if (bubble.classList.contains('is-on')) position(); });
 
@@ -495,6 +619,7 @@ ${books}
     });
 
     applyTime();
+    setInterval(applyTime, 30000);   // the window and the clock keep up with real time
     /* returning visitors and ?skip: no entrance to wait for */
     setTimeout(function () {
       if (!greeted && !document.body.classList.contains('is-entering') && isHere()) greet(false);
